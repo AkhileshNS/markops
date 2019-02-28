@@ -20,30 +20,12 @@ class Selection extends Component {
             <Appbar title="Choose the Department, Class and Section" />
             <Select 
                 value={this.state.department}
-                options={[{
-                    content: "ISE",
-                    value: "ISE"
-                },{
-                    content: "CSE",
-                    value: "CSE"
-                }]}
+                values={["ISE", "CSE"]}
                 onChange={e => this.setState({department: e.target.value})} 
             />
-            <Select 
+            <Select
                 value={this.state.class}
-                options={[{
-                    content: "1",
-                    value: "1"
-                },{
-                    content: "2",
-                    value: "2"
-                },{
-                    content: "3",
-                    value: "3"
-                },{
-                    content: "4",
-                    value: "4"
-                }]}
+                values={["1", "2", "3", "4"]}
                 onChange={e => this.setState({class: e.target.value})}
             />
             <Select 

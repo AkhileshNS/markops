@@ -6,8 +6,8 @@ import React from 'react';
 import './Appbar.css';
 
 const Appbar = props => (
-    <div  className="Appbar">
-        <h2>{props.title}</h2>
+    <div className="Appbar">
+        <h3>{props.title}</h3>
     </div>
 );
 

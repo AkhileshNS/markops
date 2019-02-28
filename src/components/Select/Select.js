@@ -11,13 +11,17 @@ class Select extends Component {
         let Options = [], defValue={
             value, onChange
         };
-        Options.push(<option value={value} disabled hidden>{value}</option>);
+        Options.push(<option key={value} value={value} disabled hidden>{value}</option>);
+
+        if ("disabled" in this.props) {
+            defValue["disabled"] = this.props.disabled;
+        }
 
         if ("options" in this.props) {
             let {options} = this.props;
             for (let option of options) {
                 let {value, content} = option;
-                Options.push(<option value={value}>
+                Options.push(<option key={value} value={value}>
                     {content}
                 </option>);
             }
@@ -33,7 +37,7 @@ class Select extends Component {
                     vals = [option, option];
                 }
 
-                Options.push(<option value={vals[0].trim()}>
+                Options.push(<option key={vals[0].trim()} value={vals[0].trim()}>
                     {vals[1].trim()}
                 </option>);
             }
