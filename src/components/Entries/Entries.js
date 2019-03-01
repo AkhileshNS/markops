@@ -1,16 +1,56 @@
 
 // External Libraries
-import React from 'react';
+import React, {Component} from 'react';
 
 // Internal Libraries
 import './Entries.css';
+import Entry from '../Entry/Entry';
 
-const Entries = props => {
-    let options = [];
+class Entries extends Component {
+    entryChange = (entryIndex, entryKeyIndex, entryValue) => {
+        let entries = [...this.props.entries];
+        let entry = entries[entryIndex].split(",");
+        entry[entryKeyIndex] = entryValue;
+        entries[entryIndex] = entry.join(",");
+        this.props.onChange(entries);
+    }
 
-    return <div className="Entries">
+    removeEntry = (entryIndex) => {
+        let entries = [...this.props.entries];
+        entries.splice(entryIndex, 1);
+        this.props.onChange(entries);
+    }
 
-    </div>;
+    addEntry = () => {
+        let entries = [...this.props.entries];
+        entries.push(",Select CO,Select PO,");
+        this.props.onChange(entries);
+    }
+
+    render() {
+        let {entries} = this.props;
+        let Entries = [];
+
+        for (let i in entries) {
+            let [name, CO, PO, max] = entries[i].split(",");
+            Entries.push(
+            <Entry 
+                key={"Entries:" + i.toString()}
+                i={i}
+                name={name}
+                CO={CO}
+                PO={PO}
+                max={max}
+                entryChange={this.entryChange}
+                removeEntry={this.removeEntry}
+            />);
+        }
+
+        return <div className="Entries">
+            {Entries}
+            {(entries===null ? null : <button onClick={this.addEntry}>New</button>)}
+        </div>;
+    }
 }
 
 export default Entries;

@@ -7,11 +7,11 @@ import './Select.css';
 
 class Select extends Component {
     render() {
-        let {value, onChange} = this.props; // Required Props
+        let {value, onChange, name} = this.props; // Required Props
         let Options = [], defValue={
             value, onChange
         };
-        Options.push(<option key={value} value={value} disabled hidden>{value}</option>);
+        Options.push(<option key={"Select:" + name + ":-1"} value={value} disabled hidden>{value}</option>);
 
         if ("disabled" in this.props) {
             defValue["disabled"] = this.props.disabled;
@@ -19,9 +19,10 @@ class Select extends Component {
 
         if ("options" in this.props) {
             let {options} = this.props;
-            for (let option of options) {
+            for (let i in options) {
+                let option = options[i];
                 let {value, content} = option;
-                Options.push(<option key={value} value={value}>
+                Options.push(<option key={"Select:" + name + ":" + i} value={value}>
                     {content}
                 </option>);
             }
@@ -29,7 +30,8 @@ class Select extends Component {
 
         if ("values" in this.props) {
             let {values} = this.props;
-            for (let option of values) {
+            for (let i in values) {
+                let option = values[i];
                 let vals;
                 if (option.includes(":")) {
                     vals = option.split(":");
@@ -37,7 +39,7 @@ class Select extends Component {
                     vals = [option, option];
                 }
 
-                Options.push(<option key={vals[0].trim()} value={vals[0].trim()}>
+                Options.push(<option key={"Select:" + name + ":" + i} value={vals[0].trim()}>
                     {vals[1].trim()}
                 </option>);
             }

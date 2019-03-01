@@ -18,22 +18,26 @@ class Selection extends Component {
     render() {
         return <div className="Selection">
             <Appbar title="Choose the Department, Class and Section" />
-            <Select 
+            <Select
+                name="dep" 
                 value={this.state.department}
                 values={["ISE", "CSE"]}
                 onChange={e => this.setState({department: e.target.value})} 
             />
             <Select
+                name="class"
                 value={this.state.class}
                 values={["1", "2", "3", "4"]}
                 onChange={e => this.setState({class: e.target.value})}
             />
-            <Select 
+            <Select
+                name="sec" 
                 value={this.state.section}
                 values={["A", "B", "both: Both"]}
                 onChange={e => this.setState({section: e.target.value})}
             />
-            <Select 
+            <Select
+                name="sub" 
                 value={this.state.subject}
                 values={["SEO", "CNS", "EM", "SNA"]}
                 onChange={e => this.setState({subject: e.target.value})}
