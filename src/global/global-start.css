@@ -10,6 +10,10 @@ body {
     --dark-tan: #111;
     --gray: #666; 
     --light-white: #F7F7F7;
+    --table-gray: #9DA7B0;
+    --table-header: #1A1F25;
+    --error-color: #ff5039;
+    --accent: #06D19C;
 
     --card-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     --card-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -70,9 +74,14 @@ select {
     margin: 8px;
     border-radius: 6px;
     border: none;
-    box-shadow: var(--card-2);
+    box-shadow: var(--card-3);
     outline: none;
     cursor: pointer;
     color: var(--gray);
+    transition: 0.2s ease box-shadow;
+}
+
+select:hover {
+    box-shadow: var(--card-4);
 }
   

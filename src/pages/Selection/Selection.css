@@ -14,3 +14,9 @@
     margin-top: 16px;
     text-align: center;
 }
+
+.Selection-Modal {
+    display: flex;
+    flex-direction: row;
+    border-top: 50px solid var(--primary);
+}
