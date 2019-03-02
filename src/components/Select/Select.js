@@ -21,8 +21,8 @@ class Select extends Component {
             let {options} = this.props;
             for (let i in options) {
                 let option = options[i];
-                let {value, content} = option;
-                Options.push(<option key={"Select:" + name + ":" + i} value={value}>
+                let {Value, content} = option;
+                Options.push(<option key={"Select:" + name + ":" + i} value={Value}>
                     {content}
                 </option>);
             }

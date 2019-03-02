@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 
 // Internal Libraries
 import './Entries.css';
-import Entry from '../Entry/Entry';
+import Entry from '../../components/Entry/Entry';
 
 class Entries extends Component {
     entryChange = (entryIndex, entryKeyIndex, entryValue) => {

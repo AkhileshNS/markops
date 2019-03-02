@@ -1,0 +1,16 @@
+.Selection {
+    margin-top: 50px;
+    margin-bottom: 64px;
+    height: calc(100vh - 114px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Selection > p {
+    width: 90%;
+    max-width: 768px;
+    margin-top: 16px;
+    text-align: center;
+}

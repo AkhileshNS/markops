@@ -5,14 +5,74 @@
 }
   
 body {
+    --primary: #6C63FF;
+    --primary-dark: #463AFF;
+    --dark-tan: #111;
+    --gray: #666; 
+    --light-white: #F7F7F7;
+
+    --card-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --card-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --card-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    --card-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    --card-5: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", 
-    "Droid Sans", "Helvetica Neue", sans-serif;
+    font-family: "Lato", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
   
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--dark-tan);
+}
+
+p {
+    color: var(--gray);
+}
+
+button {
+    background-color: white;
+    color: var(--primary-dark);
+    border: none;
+    outline: none;
+    padding: 0px 8px;
+    height: 40px;
+    border-radius: 8px;
+    margin: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-family: "Lato", sans-serif;
+    font-weight: bold; 
+    box-shadow: var(--card-1);
+    transition: 0.2s ease box-shadow;
+}
+
+button:hover {
+    background-color: var(--light-white);
+    box-shadow: var(--card-4);
+}
+
+button:active {
+    background-color: white;
+    box-shadow: var(--card-1);
+}
+
+/* Form Elements */
+select {
+    padding: 12px;
+    font-size: 1em;
+    width: 200px;
+    margin: 8px;
+    border-radius: 6px;
+    border: none;
+    box-shadow: var(--card-2);
+    outline: none;
+    cursor: pointer;
+    color: var(--gray);
 }
   

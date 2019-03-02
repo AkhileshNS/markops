@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import './Config.css';
 import Appbar from '../../components/Appbar/Appbar';
 import Menu from '../../components/Menu/Menu';
-import Entries from '../../components/Entries/Entries';
+import Entries from '../../containers/Entries/Entries';
 
 // [name, CO, PO, max]
 let placeholder = ",Select CO,Select PO,";
