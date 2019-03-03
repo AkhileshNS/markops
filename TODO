@@ -3,4 +3,8 @@
 
 2) Setup dummy CO/PO Table and create a modal/dialog to present the table // DONE
 
-3) Setup dummy database and google sheets style editing for the CO/PO Table
+3) Setup dummy database and google sheets style editing for the CO/PO Table // DONE
+
+4) Fix bouncing cells issue in table // DONE, Sort of
+
+5) Complete dummy database connection to the Table

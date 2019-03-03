@@ -72,18 +72,18 @@ const Table = props => {
                     containerStyle += "selected ";
                 }
 
-                columns.push(<div onClick={() => props.onClick(i, j)} key={j} className={"column " + containerStyle}>
+                columns.push(<td onClick={() => props.onClick(i, j)} key={j} className={"column " + containerStyle}>
                     <p className={textStyle}>{info}</p>
-                </div>);
+                </td>);
             }
-            rows.push(<div key={i} className={"row"}>
+            rows.push(<tr key={i} className={"row"}>
                 {columns}
-            </div>);
+            </tr>);
         }
 
-        Table.push(<div key={k} className="table">
-            {rows}
-        </div>);
+        Table.push(<table key={k} className="table">
+            <tbody>{rows}</tbody>
+        </table>);
     }
 
     return <div className="Table">
