@@ -11,8 +11,24 @@ import Modal from '../../components/Modal/Modal';
 import Table from '../../components/Table/Table';
 
 // Functions (Utility and Database)
-import {getDepartments} from '../../database/controller';
-import {DEPARTMENT, CLASS, SECTION, SUBJECT, inputKeys, getClasses, getSections, getSubjects, handleKeyDown} from './functions';
+import {
+    getDepartments, 
+    getSubjectRatios, 
+    setSubjectRatios, 
+    getTableFromString, 
+    getStringFromTable
+} from '../../database/controller';
+import {
+    DEPARTMENT, 
+    CLASS, 
+    SECTION, 
+    SUBJECT, 
+    inputKeys, 
+    getClasses, 
+    getSections, 
+    getSubjects, 
+    handleKeyDown
+} from './functions';
 
 /*
     {
@@ -33,14 +49,7 @@ class Selection extends Component {
         data: null,
         visible: false,
         selected: [-1, -1],
-        table: [
-            ["CO/PO","PO1|h","PO2|h","PO3|h","PO4|h","PO5|h","PO6|h","PO7|h","PO8|h","PO9|h","PO10|h","PO11|h","PO12|h"],
-            ["CO1|h","","","","","","","","","","","",""],
-            ["CO2|h","","","","","","","","","","","",""],
-            ["CO3|h","","","","","","","","","","","",""],
-            ["CO4|h","","","","","","","","","","","",""],
-            ["CO5|h","","","","","","","","","","","",""]
-        ]
+        table: null
     }
 
     componentDidMount() {
@@ -48,6 +57,8 @@ class Selection extends Component {
             console.log(res);
             this.setState({data: res});
         }, err => console.log(err));
+
+        
 
         document.addEventListener("keydown", e => {
             let res = handleKeyDown(e, this.state.selected, this.state.table);
@@ -64,10 +75,21 @@ class Selection extends Component {
     // Modal Methods
     openModal = () => {
         if (this.state.subject!==SUBJECT) {
-            this.setState({visible: true});
+            if (this.state.table===null) {
+                getSubjectRatios(this.state.subject, table => {
+                    this.setState({table: getTableFromString(table), visible: true});
+                });
+            } else {
+                this.setState({visible: true});
+            }
         }
     }
     closeModal = () => this.setState({visible: false});
+    saveModal = () => {
+        setSubjectRatios(this.state.subject, getStringFromTable(this.state.table), () => {
+            this.setState({visible: false});
+        });
+    }
     handleTableClick = (i,j) => {
         if (i>0 && j>0) {
             this.setState({selected: [i,j]});
@@ -87,6 +109,7 @@ class Selection extends Component {
         return <div className="Selection">
             <Modal visible={visible} closeModal={this.closeModal}>
                 <div className="Selection-Modal">
+                    <div className="Selection-Modal-Appbar"><button onClick={this.saveModal}>Save Changes</button></div>
                     <input 
                         type="text"
                         disabled={[-1,0].includes(selected[0]) || [-1,0].includes(selected[1])}

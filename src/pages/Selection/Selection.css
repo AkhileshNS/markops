@@ -18,7 +18,6 @@
 .Selection-Modal {
     display: flex;
     flex-direction: column;
-    border-top: 50px solid var(--primary);
 }
 
 .Selection-Modal > input[type=text] {
@@ -27,4 +26,17 @@
     border: 0.5px solid var(--table-gray);
     outline: none;
     font-size: 1.2em;
+}
+
+.Selection-Modal-Appbar {
+    display: flex;
+    justify-content: flex-end;
+    height: 50px;
+    background-color: var(--primary);
+    align-items: center;
+}
+
+.Selection-Modal-Appbar > button {
+    height: 35px;
+    margin-right: 8px;
 }
