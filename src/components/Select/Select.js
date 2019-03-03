@@ -2,7 +2,7 @@
 // External Libraries
 import React, {Component} from 'react';
 
-// Internal Libraries
+// Internal Components and CSS
 import './Select.css';
 
 class Select extends Component {

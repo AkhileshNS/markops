@@ -2,7 +2,7 @@
 // External Libraries
 import React from 'react';
 
-// Internal Libraries
+// Internal Components and CSS
 import "./Table.css";
 
 const Table = props => {
@@ -65,7 +65,11 @@ const Table = props => {
                 }
 
                 if (i%2===1) {
-                    containerStyle += "grey "
+                    containerStyle += "grey ";
+                }
+
+                if (i===props.selected[0] && j===props.selected[1]) {
+                    containerStyle += "selected ";
                 }
 
                 columns.push(<div onClick={() => props.onClick(i, j)} key={j} className={"column " + containerStyle}>
@@ -82,7 +86,7 @@ const Table = props => {
         </div>);
     }
 
-    return <div className="TimeTable">
+    return <div className="Table">
         {Table}
     </div>
 };

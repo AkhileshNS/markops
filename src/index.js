@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import BrowserRouter from 'react-router-dom/BrowserRouter';
 
-// Internal Components
+// Internal Components and CSS
 import './global/global-start.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';

@@ -1,6 +1,4 @@
 .Table {
-    margin-top: 130px;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,7 +7,7 @@
 .table {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
 }
 
 .row {
@@ -25,12 +23,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 75px;
     cursor: pointer;
+    overflow: hidden;
+    width: 75px;
 }
 
-.column:hover {
-    border-bottom: 2px solid var(--table-gray);
+.column > p {
+    display: inline;
+    max-width: 100%;
+    word-wrap: break-word;
+    white-space: pre-line;
+}
+
+.column:hover, .selected {
+    border: 2px solid var(--table-gray);
 }
 
 .header {
@@ -39,7 +45,7 @@
 }
 
 .header:hover {
-    border-bottom: 0.5px solid var(--table-gray);
+    border: 0.5px solid var(--table-gray);
 }
 
 .header-title {

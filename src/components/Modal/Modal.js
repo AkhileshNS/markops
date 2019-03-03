@@ -2,7 +2,7 @@
 // External Libraries
 import React, {Fragment} from 'react';
 
-// Internal Libraries
+// Internal Components and CSS
 import "./Modal.css";
 
 const Modal = props => {

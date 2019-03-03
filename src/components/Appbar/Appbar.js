@@ -2,7 +2,7 @@
 // External Libraries
 import React from 'react';
 
-// Internal Libraries
+// Internal Components and CSS
 import './Appbar.css';
 
 const Appbar = props => (

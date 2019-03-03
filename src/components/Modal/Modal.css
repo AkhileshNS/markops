@@ -6,7 +6,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 99;
-    transition: 1s all ease;
+    box-shadow: var(--card-4);
 }
 
 .Backdrop {
@@ -18,5 +18,4 @@
     width: 100vw;
     height: 100vh;
     z-index: 98;
-    transition: 1s all ease;
 }

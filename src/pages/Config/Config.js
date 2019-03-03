@@ -2,7 +2,7 @@
 // External Libraries
 import React, {Component} from 'react';
 
-// Internal Libraries
+// Internal Components and CSS
 import './Config.css';
 import Appbar from '../../components/Appbar/Appbar';
 import Menu from '../../components/Menu/Menu';

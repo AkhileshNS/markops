@@ -2,7 +2,7 @@
 // External Libraries
 import React, {Component} from 'react';
 
-// Internal Libraries
+// Internal Components and CSS
 import './Entries.css';
 import Entry from '../../components/Entry/Entry';
 

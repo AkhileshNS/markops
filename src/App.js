@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import {Switch, Route} from 'react-router-dom';
 
-// Internal Components
+// Internal Components and CSS
 import './App.css';
 import Selection from './pages/Selection/Selection';
 import Config from './pages/Config/Config';

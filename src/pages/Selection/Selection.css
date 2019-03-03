@@ -17,6 +17,14 @@
 
 .Selection-Modal {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border-top: 50px solid var(--primary);
+}
+
+.Selection-Modal > input[type=text] {
+    padding: 12px;
+    color: var(--gray);
+    border: 0.5px solid var(--table-gray);
+    outline: none;
+    font-size: 1.2em;
 }
