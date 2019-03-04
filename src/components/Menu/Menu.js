@@ -17,17 +17,19 @@ const Menu = props => {
                 values = [option, option];
             }
 
-            options.push(<button key={values[0]} onClick={() => props.onCommandSelected(values[0])}>
+            let styles = {};
+            if (props.current===values[0]) {
+                styles["className"] = "Menu-selected";
+            }
+
+            options.push(<button {...styles} key={values[0]} onClick={() => props.onCommandSelected(values[0])}>
                 {values[1]}
             </button>);
         }
 
         
     }
-
-    if ("addCommand" in props) {
-        options.push(<button className="add" key="+" onClick={props.addCommand}>+</button>);
-    }
+    
     return <div className="Menu">{options}</div>;
 }
 

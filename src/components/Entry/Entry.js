@@ -7,7 +7,7 @@ import './Entry.css';
 import Select from '../Select/Select';
 
 const Entry = props => (
-    <div className="entry">
+    <div className="Entry">
         <p>Question: </p>
         <input
             type="text"

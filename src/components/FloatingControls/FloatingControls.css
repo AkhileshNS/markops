@@ -1,0 +1,35 @@
+.floating {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    position: fixed;
+    bottom: 88px;
+    right: 24px;
+    box-shadow: var(--card-3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4em;
+    cursor: pointer;
+    padding-bottom: 3px;
+    padding-top: -3px;
+    transition: box-shadow ease 0.2s;
+}
+
+.floating-option {
+    box-shadow: var(--card-3);
+    padding: 8px;
+    position: fixed;
+    right: 24px;
+    background-color: white;
+    transform: translateX(200%);
+    cursor: pointer;
+    transition: transform ease 0.5s, box-shadow ease 0.2s;
+    border-radius: 8px;
+}
+
+.floating:active, .floating-option:active {
+    box-shadow: var(--card-1);
+}

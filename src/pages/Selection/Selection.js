@@ -30,6 +30,12 @@ import {
     handleKeyDown,
     checkctrl
 } from './functions';
+import {
+    subscribe, 
+    unsubscribe, 
+    getSelectionState, 
+    setSelectionState
+} from '../../database/localStore';
 
 /*
     {
@@ -56,6 +62,8 @@ class Selection extends Component {
     }
 
     componentDidMount() {
+        subscribe(this.trigger);
+
         getDepartments(res => {
             console.log(res);
             this.setState({data: res});
@@ -80,7 +88,15 @@ class Selection extends Component {
     }
 
     componentWillUnmount() {
+        unsubscribe(this.trigger);
         document.removeEventListener("keydown", () => console.log("Removing keydown event listener"), false);
+    }
+
+    trigger = () => {
+        let state = getSelectionState();
+        if (state!==null) {
+            this.setState(state);
+        }
     }
 
     // Modal Methods
@@ -207,7 +223,10 @@ class Selection extends Component {
                     disabled: this.state.subject===SUBJECT
                 },{
                     value: "Select",
-                    onClick: () => this.props.history.push(`/${department}_${Class}_${section}_${subject}`),
+                    onClick: () => {
+                        this.props.history.push(`/${department}_${Class}_${section}_${subject}`);
+                        setSelectionState(this.state);
+                    },
                     disabled: this.state.subject===SUBJECT
                 }]}
             />

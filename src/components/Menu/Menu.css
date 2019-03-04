@@ -1,0 +1,4 @@
+.Menu-selected {
+    background-color: var(--primary);
+    color: white;
+}

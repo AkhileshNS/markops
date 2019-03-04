@@ -8,3 +8,10 @@
 4) Fix bouncing cells issue in table // DONE, Sort of
 
 5) Complete dummy database connection to the Table // DONE
+
+6) Frontend of Config Page:
+    a) Add a floating action button  // DONE
+    b) Re-arrange nav buttons // DONE
+    c) Add styling to the inputs // DONE
+
+7) Add a modal for adding new tests

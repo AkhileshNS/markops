@@ -1,0 +1,30 @@
+.Entry > button {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-left: 6px;
+}
+
+.Entry > input[type=text] {
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 1em;
+    border: none;
+    outline: none;
+    box-shadow: var(--card-1);
+    transition: box-shadow ease 0.2s;
+}
+
+.Entry > input[type=text]:hover {
+    box-shadow: var(--card-3);
+}
+
+.Entry > select {
+    box-shadow: var(--card-1);
+    transition: box-shadow ease 0.2s;
+    padding: 8px;
+}
+
+.Entry > select:hover {
+    box-shadow: var(--card-3);
+}
