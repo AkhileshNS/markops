@@ -59,6 +59,10 @@ const Table = props => {
                                 textStyle += "green ";
                                 break;
                             }
+                            case "d": {
+                                containerStyle += "deletion ";
+                                break;
+                            }
                             default: break;
                         }
                     }

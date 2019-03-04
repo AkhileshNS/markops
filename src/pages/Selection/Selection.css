@@ -30,13 +30,27 @@
 
 .Selection-Modal-Appbar {
     display: flex;
-    justify-content: flex-end;
     height: 50px;
     background-color: var(--primary);
     align-items: center;
+    padding-right: 4px;
+    padding-left: 8px;
+}
+
+.Selection-Modal-Appbar > input[type=text] {
+    padding: 6px;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    font-size: 1.2em;
+    margin-right: 4px;
 }
 
 .Selection-Modal-Appbar > button {
     height: 35px;
-    margin-right: 8px;
+    margin-right: 4px;
+}
+
+.final {
+    margin-left: auto;
 }

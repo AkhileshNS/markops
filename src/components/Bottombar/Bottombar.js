@@ -11,8 +11,13 @@ const Bottombar = props => {
 
     for (let i in options) {
         let {value, onClick} = options[i];
+        let disabled = false;
 
-        Values.push(<button key={"Bottombar: " + i.toString()} onClick={onClick}>{value}</button>);
+        if ("disabled" in options[i]) {
+            disabled = options[i].disabled;
+        }
+
+        Values.push(<button key={"Bottombar: " + i.toString()} disabled={disabled} onClick={onClick}>{value}</button>);
     }
 
     return <div className="Bottombar">

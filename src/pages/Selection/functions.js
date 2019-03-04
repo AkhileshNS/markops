@@ -44,6 +44,21 @@ export const getSubjects = (data, dep, Class, section) => {
     return [];
 }
 
+// 1 - ctrl+c, 2 - ctrl+v
+export const checkctrl = (e) => {
+    let E = e || window.event;
+    var key = E.which || E.keyCode; // keyCode detection
+    var ctrl = E.ctrlKey ? E.ctrlKey : ((key === 17) ? true : false); // ctrl detection
+
+    if ( key === 86 && ctrl ) {
+        return 2;
+    } else if ( key === 67 && ctrl ) {
+        return 1;
+    }
+
+    return 0;
+}
+
 export const handleKeyDown = (e, selected, table) => {
     const [i, j] = selected;
 

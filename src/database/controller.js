@@ -1,9 +1,9 @@
 import firebase from './firebase';
 
 // Predefined Constants
-const rowSeperator = "|" // row seperator "1=0::3:::|2=::::::"
-const hdSeperator = "=" // header-data seperator "1=0::3:::"
-const dataSeperator = ":" // data seperator "0::3:::"
+export const rowSeperator = "|", // row seperator "1=0::3:::|2=::::::"
+hdSeperator = "=", // header-data seperator "1=0::3:::"
+dataSeperator = ":"; // data seperator "0::3:::"
 
 // Database Functions
 export const getDepartments = (res, rej) => {
@@ -41,18 +41,18 @@ export const setSubjectRatios = (subj, value, res, rej) => {
 }
 
 // Utility Functions
-export const getTableFromString = str => { // str = "1=:::::::::::|2=:::::::::::|..."
+export const getTableFromString = (str) => { // str = "1=:::::::::::|2=:::::::::::|..."
     let table = [];
 
     let rows = str.split(rowSeperator); // rows = ["1=:::::::::::", ...]
     for (let row of rows) {
         let [header, data] = row.split(hdSeperator); // header = "1", data = ":::::::::::"
-        table.push(["CO" + header + "|h", ...data.split(dataSeperator)]);
+        table.push(["CO" + header + "|hd", ...data.split(dataSeperator)]);
     }
 
     if (table.length>0) {
         let headers = ["CO/PO"];
-        for (let i=1; i<table[0].length; i++) {headers.push("PO" + i + "|h");}
+        for (let i=1; i<table[0].length; i++) {headers.push("PO" + i + "|hd");}
         table.unshift(headers);
     }
 

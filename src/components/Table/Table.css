@@ -85,3 +85,16 @@
 .grey {
     background-color: var(--light-white);
 }
+
+.deletion > p {
+    color: inherit;
+}
+
+.deletion {
+    cursor: pointer;   
+    color: var(--primary);
+}
+
+.deletion:hover {
+    color: var(--error-color);
+}

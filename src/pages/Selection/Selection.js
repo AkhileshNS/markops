@@ -27,7 +27,8 @@ import {
     getClasses, 
     getSections, 
     getSubjects, 
-    handleKeyDown
+    handleKeyDown,
+    checkctrl
 } from './functions';
 
 /*
@@ -49,7 +50,9 @@ class Selection extends Component {
         data: null,
         visible: false,
         selected: [-1, -1],
-        table: null
+        table: null,
+        newName: "",
+        clipboard: ""
     }
 
     componentDidMount() {
@@ -58,30 +61,36 @@ class Selection extends Component {
             this.setState({data: res});
         }, err => console.log(err));
 
-        
-
         document.addEventListener("keydown", e => {
-            let res = handleKeyDown(e, this.state.selected, this.state.table);
-            if (res!==null) {
-                this.setState({selected: [res[0], res[1]], table: res[2]});
+            let check = checkctrl(e);
+
+            if (check===0) {
+                let res = handleKeyDown(e, this.state.selected, this.state.table);
+                if (res!==null) {
+                    this.setState({selected: [res[0], res[1]], table: res[2]});
+                }
+            } else if (check===2 && this.state.clipboard!=="") {
+                let table = [...this.state.table];
+                table[this.state.selected[0]][this.state.selected[1]] = this.state.clipboard;
+                this.setState({table});
+            } else {
+                this.setState({clipboard: this.state.table[this.state.selected[0]][this.state.selected[1]]});
             }
-        });
+        }, false);
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown");
+        document.removeEventListener("keydown", () => console.log("Removing keydown event listener"), false);
     }
 
     // Modal Methods
     openModal = () => {
-        if (this.state.subject!==SUBJECT) {
-            if (this.state.table===null) {
-                getSubjectRatios(this.state.subject, table => {
-                    this.setState({table: getTableFromString(table), visible: true});
-                });
-            } else {
-                this.setState({visible: true});
-            }
+        if (this.state.table===null) {
+            getSubjectRatios(this.state.subject, table => {
+                this.setState({table: getTableFromString(table), visible: true});
+            });
+        } else {
+            this.setState({visible: true});
         }
     }
     closeModal = () => this.setState({visible: false});
@@ -93,6 +102,17 @@ class Selection extends Component {
     handleTableClick = (i,j) => {
         if (i>0 && j>0) {
             this.setState({selected: [i,j]});
+        } else {
+            let table = [...this.state.table];
+            i = parseInt(i); j = parseInt(j);
+            if (i===0 && j>0) {
+                for (let k in table) {
+                    table[k].splice(j, 1);
+                }
+            } else if (j===0 && i>0) {
+                table.splice(i, 1);
+            }
+            this.setState({table});
         }
     };
     handleTableValueChange = e => {
@@ -102,6 +122,23 @@ class Selection extends Component {
             this.setState({table});
         }
     }
+    addCO = () => {
+        let table = [...this.state.table];
+        let data = ["CO" + this.state.newName + "|hd"];
+        for (let i=1; i<table[0].length; i++) {
+            data.push("");
+        }
+        table.push(data);
+        this.setState({table});
+    }
+    addPO = () => {
+        let table = [...this.state.table];
+        table[0].push("PO" + this.state.newName + "|hd");
+        for (let i=1; i<table.length; i++) {
+            table[i].push("");
+        }
+        this.setState({table});
+    }
 
     render() {
         let {department, Class, section, subject, data, visible, selected, table} = this.state;
@@ -109,7 +146,17 @@ class Selection extends Component {
         return <div className="Selection">
             <Modal visible={visible} closeModal={this.closeModal}>
                 <div className="Selection-Modal">
-                    <div className="Selection-Modal-Appbar"><button onClick={this.saveModal}>Save Changes</button></div>
+                    <div className="Selection-Modal-Appbar">
+                        <input 
+                            type="text"
+                            placeholder="CO/PO number"
+                            value={this.state.newName} 
+                            onChange={e => this.setState({newName: e.target.value})} 
+                        />
+                        <button onClick={this.addCO}>Add CO</button>
+                        <button onClick={this.addPO}>Add PO</button>
+                        <button className="final" onClick={this.saveModal}>Save Changes</button>
+                    </div>
                     <input 
                         type="text"
                         disabled={[-1,0].includes(selected[0]) || [-1,0].includes(selected[1])}
@@ -156,10 +203,12 @@ class Selection extends Component {
             <Bottombar
                 options={[{
                     value: "CO/PO Table",
-                    onClick: this.openModal
+                    onClick: this.openModal,
+                    disabled: this.state.subject===SUBJECT
                 },{
                     value: "Select",
-                    onClick: () => console.log("Selected values")
+                    onClick: () => this.props.history.push(`/${department}_${Class}_${section}_${subject}`),
+                    disabled: this.state.subject===SUBJECT
                 }]}
             />
         </div>;
