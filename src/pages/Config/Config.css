@@ -11,11 +11,6 @@
     color: var(--black-tan);
 }
 
-.Config > h4 {
-    margin: 0px 0px 8px;
-    color: var(--gray);
-}
-
 .Config-Modal {
     display: flex;
     flex-direction: column;
@@ -54,4 +49,15 @@
 .Config-Modal-Cancel:hover {
     box-shadow: none;
     color: var(--error-color);
+}
+
+.Config-Details {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 0px 8px;
+}
+
+.Config-Details > h4 {
+    color: var(--gray);
+    margin: 0px 8px;
 }

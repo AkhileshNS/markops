@@ -11,6 +11,9 @@ import Bottombar from '../../components/Bottombar/Bottombar';
 import FloatingControls from '../../components/FloatingControls/FloatingControls';
 import Modal from '../../components/Modal/Modal';
 
+// Database Functions
+import {getDepartmentName, getSubjectName} from '../../database/controller';
+
 // [name, CO, PO, max]
 let placeholder = ",Select CO,Select PO,";
 let placeholders = [placeholder, placeholder];
@@ -20,7 +23,18 @@ class Config extends Component {
         current: "", 
         options: {},
         visible: false,
-        newName: ""
+        newName: "",
+        department: "",
+        subject: ""
+    }
+
+    componentDidMount() {
+        let paths = this.props.location.pathname.split("/");
+        let details = paths[1].split("_");
+        let department = details[0];
+        let subject = details[3];
+        getDepartmentName(department, res => this.setState({department: res}), err => console.log(err));
+        getSubjectName(subject, res => this.setState({subject: res}), err => console.log(err));
     }
 
     addCommand = () => {
@@ -37,7 +51,11 @@ class Config extends Component {
     }
 
     render() {
-        let {current, options, visible, newName} = this.state;
+        let {current, options, visible, newName, department, subject} = this.state;
+        let paths = this.props.location.pathname.split("/");
+        let details = paths[1].split("_");
+        let Class = details[1];
+        let section = details[2];
 
         return <div className="Config">
             <Modal visible={visible} closeModal={() => this.setState({visible: false})}>
@@ -65,8 +83,12 @@ class Config extends Component {
                 </div>
             </Modal>
             <Appbar title="Complete Configuration"/>
-            <h2>Department of Information Science and Engineering</h2>
-            <h4>{`Course: Client and Server Programming Class: III Section: A`}</h4>
+            <h2>Department of {department}</h2>
+            <div className="Config-Details">
+                <h4>Subject: {subject}</h4>
+                <h4>Class: {Class}</h4>
+                <h4>Section: {section}</h4>
+            </div>
             <Menu 
                 current={current}
                 onCommandSelected={command => this.setState({current: command})}

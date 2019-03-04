@@ -19,7 +19,7 @@ export const getDepartments = (res, rej) => {
 }
 
 export const getSubjectRatios = (subj, res, rej) => {
-    firebase.database().ref("subjects/" + subj).once('value')
+    firebase.database().ref(`subjects/${subj}/data`).once('value')
     .then(snap => {
         if (snap.exists()) {
             res(snap.val());
@@ -31,13 +31,37 @@ export const getSubjectRatios = (subj, res, rej) => {
 }
 
 export const setSubjectRatios = (subj, value, res, rej) => {
-    firebase.database().ref("subjects/" + subj).set(value, err => {
+    firebase.database().ref(`subjects/${subj}/data`).set(value, err => {
         if (err) {
             rej("There was error setting the value to the subject");
         } else {
             res("Successfully set value to the subject");
         }
     });
+}
+
+export const getDepartmentName = (dep, res, rej) => {
+    firebase.database().ref(`departments/${dep}/name`).once('value')
+    .then(snap => {
+        if (snap.exists()) {
+            res(snap.val());
+        } else {
+            rej("department's name node does not exist");
+        }
+    })
+    .catch(err => rej("There was an error getting department name: " + err));
+}
+
+export const getSubjectName = (subj, res, rej) => {
+    firebase.database().ref(`subjects/${subj}/name`).once('value')
+    .then(snap => {
+        if (snap.exists()) {
+            res(snap.val());
+        } else {
+            rej("department's name node does not exist");
+        }
+    })
+    .catch(err => rej("There was an error getting subject name: " + err));
 }
 
 // Utility Functions
