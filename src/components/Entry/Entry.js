@@ -28,7 +28,7 @@ const Entry = props => (
             onChange={e => props.entryChange(props.i, 2, e.target.value)}
         />
         <input 
-            type="text" 
+            type="number" 
             value={(props.max===null ? "" : props.max)} 
             placeholder="Max"
             onChange={e => props.entryChange(props.i, 3, e.target.value)} 

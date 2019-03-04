@@ -1,3 +1,4 @@
+import db from './dexie';
 
 // State variables
 let state = {
@@ -5,6 +6,16 @@ let state = {
 }
 
 let refs = [];
+
+// Local Refresh: 1 - selectionState
+db.states.where("_id").equals(1)
+.each(prevState => {
+    state.selectionState = prevState;
+
+    for (let trigger of refs) {
+        trigger();
+    }
+});
 
 // Subscription Methods
 const subscribe = trigger => {
@@ -31,6 +42,11 @@ const getSelectionState = () => {
 
 const setSelectionState = SelectionState => {
     state.selectionState = SelectionState;
+
+    db.states.put({
+        _id: 1,
+        ...SelectionState
+    });
 
     for (let trigger of refs) {
         trigger();

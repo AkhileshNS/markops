@@ -15,3 +15,43 @@
     margin: 0px 0px 8px;
     color: var(--gray);
 }
+
+.Config-Modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.Config-Modal > p {
+    font-size: 1em;
+    padding: 8px;
+}
+
+.Config-Modal > input {
+    padding: 8px;
+    border: none;
+    outline: none;
+    border: 1px solid var(--gray);
+    background-color: var(--light-white);
+    margin: 0px 8px;
+    font-size: 1em;
+}
+
+.Config-Modal > div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Config-Modal-Ok, .Config-Modal-Cancel {
+    box-shadow: none;
+    color: var(--dark-tan);
+}
+
+.Config-Modal-Ok:hover {
+    box-shadow: none;
+    color: var(--accent);
+}
+
+.Config-Modal-Cancel:hover {
+    box-shadow: none;
+    color: var(--error-color);
+}

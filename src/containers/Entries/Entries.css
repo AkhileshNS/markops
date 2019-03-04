@@ -1,3 +1,13 @@
 .Entries {
     margin-top: 8px;
 }
+
+.Entries-Ok {
+    color: white;
+    background-color: var(--accent);
+}
+
+.Entries-Cancel {
+    color: white;
+    background-color: var(--error-color);
+}

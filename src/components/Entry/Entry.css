@@ -2,10 +2,12 @@
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    margin-left: 6px;
+    margin-left: 12px;
+    color: white;
+    background-color: var(--error-color);
 }
 
-.Entry > input[type=text] {
+.Entry > input {
     border-radius: 8px;
     padding: 8px;
     font-size: 1em;
@@ -15,7 +17,7 @@
     transition: box-shadow ease 0.2s;
 }
 
-.Entry > input[type=text]:hover {
+.Entry > input:hover {
     box-shadow: var(--card-3);
 }
 

@@ -48,7 +48,8 @@ class Entries extends Component {
 
         return <div className="Entries">
             {Entries}
-            {(entries===null ? null : <button onClick={this.addEntry}>New</button>)}
+            {(entries===null ? null : <button onClick={this.addEntry} className="Entries-Ok">New</button>)}
+            {(entries===null ? null : <button onClick={this.removeTest} className="Entries-Cancel">Remove Test</button>)}
         </div>;
     }
 }

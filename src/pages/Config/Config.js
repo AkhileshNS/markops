@@ -18,22 +18,29 @@ let placeholders = [placeholder, placeholder];
 class Config extends Component {
     state={
         current: "", 
-        options: {
-            "test 1": placeholders, 
-            "test 2": placeholders, 
-            "test 3": placeholders, 
-            "lab": placeholders, 
-            "app": placeholders
-        },
+        options: {},
         visible: false,
         newName: ""
+    }
+
+    addCommand = () => {
+        let newName = this.state.newName,
+        options = {...this.state.options};
+        options[newName] = placeholders;
+        this.setState({options, visible: false, newName: ""});
+    }
+
+    removeTest = () => {
+        let options = {...this.state.options};
+        delete options[this.state.current];
+        this.setState({options});
     }
 
     render() {
         let {current, options, visible, newName} = this.state;
 
         return <div className="Config">
-            <Modal visible={visible}>
+            <Modal visible={visible} closeModal={() => this.setState({visible: false})}>
                 <div className="Config-Modal">
                     <p>Please enter a short unique name for the test/exam you are adding</p>
                     <input 
@@ -43,8 +50,17 @@ class Config extends Component {
                         onChange={e => this.setState({newName: e.target.value})}
                     />
                     <div>
-                        <button>Add</button>
-                        <button>Cancel</button>
+                        <button 
+                            disabled={newName===""} 
+                            className="Config-Modal-Ok"
+                            onClick={this.addCommand}>
+                            Add
+                        </button>
+                        <button 
+                            className="Config-Modal-Cancel"
+                            onClick={() => this.setState({visible: false})}>
+                            Cancel
+                        </button>
                     </div>
                 </div>
             </Modal>
@@ -63,8 +79,9 @@ class Config extends Component {
                     Options[current] = entries;
                     this.setState({options: Options});
                 }}
+                removeTest={this.removeTest}
             />
-            <FloatingControls onClick={() => console.log("Command Added")} />
+            <FloatingControls onClick={() => this.setState({visible: true})} />
             <Bottombar 
                 options={[{
                     value: "Back",
