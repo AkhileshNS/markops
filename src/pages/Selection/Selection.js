@@ -14,9 +14,7 @@ import Table from '../../components/Table/Table';
 import {
     getDepartments, 
     getSubjectRatios, 
-    setSubjectRatios, 
-    getTableFromString, 
-    getStringFromTable
+    setSubjectRatios
 } from '../../database/controller';
 import {
     DEPARTMENT, 
@@ -95,7 +93,7 @@ class Selection extends Component {
     trigger = () => {
         let state = getSelectionState();
         if (state!==null) {
-            this.setState(state);
+            this.setState({...state, selected: [-1,-1], table: null});
         }
     }
 
@@ -103,7 +101,7 @@ class Selection extends Component {
     openModal = () => {
         if (this.state.table===null) {
             getSubjectRatios(this.state.subject, table => {
-                this.setState({table: getTableFromString(table), visible: true});
+                this.setState({table, visible: true});
             });
         } else {
             this.setState({visible: true});
@@ -111,7 +109,7 @@ class Selection extends Component {
     }
     closeModal = () => this.setState({visible: false});
     saveModal = () => {
-        setSubjectRatios(this.state.subject, getStringFromTable(this.state.table), () => {
+        setSubjectRatios(this.state.subject, this.state.table, () => {
             this.setState({visible: false});
         });
     }
@@ -213,7 +211,11 @@ class Selection extends Component {
                 disabled={section===SECTION}
                 value={subject}
                 values={getSubjects(data, department, Class, section)}
-                onChange={e => this.setState({subject: e.target.value})}
+                onChange={e => {
+                    if (e.target.value!==subject) {
+                        this.setState({subject: e.target.value, selection: [-1, -1], table: null});
+                    }
+                }}
             />
             <p>You can select options one after another. An option will not be selectable until the previous has been selected. You can check the Course Outcome/Program Outcome table after selecting all four options.</p>
             <Bottombar
@@ -224,8 +226,13 @@ class Selection extends Component {
                 },{
                     value: "Select",
                     onClick: () => {
-                        this.props.history.push(`/${department}_${Class}_${section}_${subject}`);
-                        setSelectionState(this.state);
+                        setSubjectRatios(this.state.subject, this.state.table, () => {
+                            this.props.history.push(`/${department}_${Class}_${section}_${subject}`);
+                            let selectionState = {...this.state};
+                            delete selectionState.table;
+                            delete selectionState.selected;
+                            setSelectionState(selectionState);
+                        });
                     },
                     disabled: this.state.subject===SUBJECT
                 }]}

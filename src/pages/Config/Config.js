@@ -12,7 +12,7 @@ import FloatingControls from '../../components/FloatingControls/FloatingControls
 import Modal from '../../components/Modal/Modal';
 
 // Database Functions
-import {getDepartmentName, getSubjectName} from '../../database/controller';
+import {getDepartmentName, getSubjectName, getTableConfig, setTableConfig} from '../../database/controller';
 
 // [name, CO, PO, max]
 let placeholder = ",Select CO,Select PO,";
@@ -35,6 +35,14 @@ class Config extends Component {
         let subject = details[3];
         getDepartmentName(department, res => this.setState({department: res}), err => console.log(err));
         getSubjectName(subject, res => this.setState({subject: res}), err => console.log(err));
+
+        getTableConfig(this.props.location.pathname, res => {
+            this.setState({options: res});
+        }, (err, err_code) => {
+            if (err_code===2) {
+                console.log(err);
+            } 
+        });
     }
 
     addCommand = () => {
@@ -48,6 +56,12 @@ class Config extends Component {
         let options = {...this.state.options};
         delete options[this.state.current];
         this.setState({options});
+    }
+
+    next = () => {
+        setTableConfig(this.props.location.pathname, this.state.options, res => {
+            this.props.history.push(this.props.location.pathname + "/input");
+        }, err => console.log(err));
     }
 
     render() {
@@ -110,7 +124,8 @@ class Config extends Component {
                     onClick: () => this.props.history.goBack()
                 },{
                     value: "Next",
-                    onClick: () => console.log("onClick tapped")
+                    disabled: Object.keys(this.state.options)===0,
+                    onClick: this.next
                 }]}
             />
         </div>;
