@@ -55,7 +55,6 @@ class Selection extends Component {
         visible: false,
         selected: [-1, -1],
         table: null,
-        newName: "",
         clipboard: ""
     }
 
@@ -67,27 +66,12 @@ class Selection extends Component {
             this.setState({data: res});
         }, err => console.log(err));
 
-        document.addEventListener("keydown", e => {
-            let check = checkctrl(e);
-
-            if (check===0) {
-                let res = handleKeyDown(e, this.state.selected, this.state.table);
-                if (res!==null) {
-                    this.setState({selected: [res[0], res[1]], table: res[2]});
-                }
-            } else if (check===2 && this.state.clipboard!=="") {
-                let table = [...this.state.table];
-                table[this.state.selected[0]][this.state.selected[1]] = this.state.clipboard;
-                this.setState({table});
-            } else {
-                this.setState({clipboard: this.state.table[this.state.selected[0]][this.state.selected[1]]});
-            }
-        }, false);
+        document.addEventListener("keydown", this.keydownHandler, false);
     }
 
     componentWillUnmount() {
         unsubscribe(this.trigger);
-        document.removeEventListener("keydown", () => console.log("Removing keydown event listener"), false);
+        document.removeEventListener("keydown", this.keydownHandler, false);
     }
 
     trigger = () => {
@@ -97,36 +81,38 @@ class Selection extends Component {
         }
     }
 
-    // Modal Methods
-    openModal = () => {
-        if (this.state.table===null) {
-            getSubjectRatios(this.state.subject, table => {
-                this.setState({table, visible: true});
-            });
+    keydownHandler = e => {
+        let check = checkctrl(e);
+
+        if (check===0) {
+            let res = handleKeyDown(e, this.state.selected, this.state.table);
+            if (res!==null) {
+                this.setState({selected: [res[0], res[1]], table: res[2]});
+            }
+        } else if (check===2 && this.state.clipboard!=="") {
+            let table = [...this.state.table];
+            table[this.state.selected[0]][this.state.selected[1]] = this.state.clipboard;
+            this.setState({table});
         } else {
-            this.setState({visible: true});
+            this.setState({clipboard: this.state.table[this.state.selected[0]][this.state.selected[1]]});
         }
     }
-    closeModal = () => this.setState({visible: false});
+
+    // Modal Methods
+    openModal = () => {
+        getSubjectRatios(this.state.subject, table => {
+            this.setState({table, visible: true});
+        });
+    }
+    closeModal = () => this.setState({visible: false, table: null, selected: [-1, -1], clipboard: ""});
     saveModal = () => {
         setSubjectRatios(this.state.subject, this.state.table, () => {
-            this.setState({visible: false});
+            this.setState({visible: false, table: null, selected: [-1, -1], clipboard: ""});
         });
     }
     handleTableClick = (i,j) => {
         if (i>0 && j>0) {
             this.setState({selected: [i,j]});
-        } else {
-            let table = [...this.state.table];
-            i = parseInt(i); j = parseInt(j);
-            if (i===0 && j>0) {
-                for (let k in table) {
-                    table[k].splice(j, 1);
-                }
-            } else if (j===0 && i>0) {
-                table.splice(i, 1);
-            }
-            this.setState({table});
         }
     };
     handleTableValueChange = e => {
@@ -136,40 +122,16 @@ class Selection extends Component {
             this.setState({table});
         }
     }
-    addCO = () => {
-        let table = [...this.state.table];
-        let data = ["CO" + this.state.newName + "|hd"];
-        for (let i=1; i<table[0].length; i++) {
-            data.push("");
-        }
-        table.push(data);
-        this.setState({table});
-    }
-    addPO = () => {
-        let table = [...this.state.table];
-        table[0].push("PO" + this.state.newName + "|hd");
-        for (let i=1; i<table.length; i++) {
-            table[i].push("");
-        }
-        this.setState({table});
-    }
 
     render() {
         let {department, Class, section, subject, data, visible, selected, table} = this.state;
 
         return <div className="Selection">
-            <Modal visible={visible} closeModal={this.closeModal}>
+            <Modal visible={visible} closeModal={() => console.log("Close signal detected")}>
                 <div className="Selection-Modal">
                     <div className="Selection-Modal-Appbar">
-                        <input 
-                            type="text"
-                            placeholder="CO/PO number"
-                            value={this.state.newName} 
-                            onChange={e => this.setState({newName: e.target.value})} 
-                        />
-                        <button onClick={this.addCO}>Add CO</button>
-                        <button onClick={this.addPO}>Add PO</button>
-                        <button className="final" onClick={this.saveModal}>Save Changes</button>
+                        <button onClick={this.closeModal}>Cancel</button>
+                        <button onClick={this.saveModal}>Save Changes</button>
                     </div>
                     <input 
                         type="text"
