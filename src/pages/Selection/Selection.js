@@ -52,6 +52,7 @@ class Selection extends Component {
         section: SECTION,
         subject: SUBJECT,
         data: null,
+        // CO/PO Table state
         visible: false,
         selected: [-1, -1],
         table: null,
@@ -188,13 +189,9 @@ class Selection extends Component {
                 },{
                     value: "Select",
                     onClick: () => {
-                        setSubjectRatios(this.state.subject, this.state.table, () => {
-                            this.props.history.push(`/${department}_${Class}_${section}_${subject}`);
-                            let selectionState = {...this.state};
-                            delete selectionState.table;
-                            delete selectionState.selected;
-                            setSelectionState(selectionState);
-                        });
+                        this.props.history.push(`/${department}_${Class}_${section}_${subject}`);
+                        let selectionState = {...this.state};
+                        setSelectionState(selectionState);
                     },
                     disabled: this.state.subject===SUBJECT
                 }]}

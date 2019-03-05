@@ -35,7 +35,7 @@
     align-items: center;
     padding-right: 4px;
     padding-left: 8px;
-    flex-direction: flex-end;
+    justify-content: flex-end;
 }
 
 .Selection-Modal-Appbar > input[type=text] {

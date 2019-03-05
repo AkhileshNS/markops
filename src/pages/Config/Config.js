@@ -12,7 +12,13 @@ import FloatingControls from '../../components/FloatingControls/FloatingControls
 import Modal from '../../components/Modal/Modal';
 
 // Database Functions
-import {getDepartmentName, getSubjectName, getTableConfig, setTableConfig} from '../../database/controller';
+import {
+    getDepartmentName, 
+    getSubjectName, 
+    getTableConfig, 
+    setTableConfig
+} from '../../database/controller';
+import {validateOptions} from './functions';
 
 // [name, CO, PO, max]
 let placeholder = ",Select CO,Select PO,";
@@ -59,7 +65,7 @@ class Config extends Component {
     }
 
     next = () => {
-        setTableConfig(this.props.location.pathname, this.state.options, res => {
+        setTableConfig(this.props.location.pathname, this.state.options, () => {
             this.props.history.push(this.props.location.pathname + "/input");
         }, err => console.log(err));
     }
@@ -124,7 +130,7 @@ class Config extends Component {
                     onClick: () => this.props.history.goBack()
                 },{
                     value: "Next",
-                    disabled: Object.keys(this.state.options)===0,
+                    disabled: !validateOptions(this.state.options),
                     onClick: this.next
                 }]}
             />

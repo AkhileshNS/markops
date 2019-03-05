@@ -22,8 +22,8 @@
     a) Remove ability to add and delete rows and columns in table // DONE
     b) Remove connection with local DB // DONE
 
-8.75) Fix remove test button not working
+8.75) Fix remove test button not working // DONE
 
-9) Setup dummy database to link the question setup
+9) Setup dummy database to link the question setup // DONE
 
-10) Need to remake the localStorage Setup
+10) Need to remake the localStorage Setup // DONE
