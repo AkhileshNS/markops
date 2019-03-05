@@ -122,8 +122,8 @@ export const getStringFromTable = table => { // table = [["CO/PO","PO1"...],["CO
 /* 
     config = {
       "test 1": {
-        Q1A: "1,1,10",
-        Q1B: "1,2,10"
+        Q1A: "1:1:10",
+        Q1B: "1:2:10"
       }
     }
 */
@@ -134,7 +134,7 @@ export const getArrObjFromConfig = config => {
         
         for (let question in config[test]) {
             let Question = question.slice(1);
-            arrObj[test].push(Question + "," + config[test][question]);
+            arrObj[test].push(Question + ":" + config[test][question]);
         }
     }
     return arrObj;
@@ -142,7 +142,7 @@ export const getArrObjFromConfig = config => {
 
 /*
     arrObj = {
-        "test 1": ["1A,1,1,10","1B,1,2,10"]
+        "test 1": ["1A:1:1:10","1B:1:2:10"]
     }
 */
 export const getConfigFromArrObj = arrObj => {
@@ -151,8 +151,8 @@ export const getConfigFromArrObj = arrObj => {
         config[test] = {};
 
         for (let value of arrObj[test]) {
-            let [question, CO, PO, max] = value.split(",");
-            config[test]["Q" + question] = CO + "," + PO + "," + max;
+            let [question, CO, PO, max] = value.split(":");
+            config[test]["Q" + question] = CO + ":" + PO + ":" + max;
         }
     }
     return config;

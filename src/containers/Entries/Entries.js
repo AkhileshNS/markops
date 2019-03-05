@@ -9,9 +9,9 @@ import Entry from '../../components/Entry/Entry';
 class Entries extends Component {
     entryChange = (entryIndex, entryKeyIndex, entryValue) => {
         let entries = [...this.props.entries];
-        let entry = entries[entryIndex].split(",");
+        let entry = entries[entryIndex].split(":");
         entry[entryKeyIndex] = entryValue;
-        entries[entryIndex] = entry.join(",");
+        entries[entryIndex] = entry.join(":");
         this.props.onChange(entries);
     }
 
@@ -32,7 +32,7 @@ class Entries extends Component {
         let Entries = [];
 
         for (let i in entries) {
-            let [name, CO, PO, max] = entries[i].split(",");
+            let [name, CO, PO, max] = entries[i].split(":");
             Entries.push(
             <Entry 
                 key={"Entries:" + i.toString()}

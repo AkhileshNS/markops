@@ -1,7 +1,5 @@
 
 export const validateOptions = options => {
-    console.log(options);
-
     if (options===null || options==={}) {
         return false;
     }
@@ -12,8 +10,8 @@ export const validateOptions = options => {
         }
 
         for (let i in options[test]) {
-            let [question, CO, PO, max] = options[test][i].split(",");
-            if (question==="" || CO==="Select CO" || PO==="Select PO" || max==="") {
+            let [question, CO, PO, max] = options[test][i].split(":");
+            if (question==="" || CO==="" || PO==="" || max==="") {
                 return false;
             }
         }

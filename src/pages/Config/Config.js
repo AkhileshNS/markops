@@ -21,7 +21,7 @@ import {
 import {validateOptions} from './functions';
 
 // [name, CO, PO, max]
-let placeholder = ",Select CO,Select PO,";
+let placeholder = ":::";
 let placeholders = [placeholder, placeholder];
 
 class Config extends Component {
