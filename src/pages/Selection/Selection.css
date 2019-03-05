@@ -35,6 +35,7 @@
     align-items: center;
     padding-right: 4px;
     padding-left: 8px;
+    flex-direction: flex-end;
 }
 
 .Selection-Modal-Appbar > input[type=text] {
@@ -49,8 +50,4 @@
 .Selection-Modal-Appbar > button {
     height: 35px;
     margin-right: 4px;
-}
-
-.final {
-    margin-left: auto;
 }

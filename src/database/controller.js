@@ -71,12 +71,12 @@ export const getTableFromString = (str) => { // str = "1=:::::::::::|2=:::::::::
     let rows = str.split(rowSeperator); // rows = ["1=:::::::::::", ...]
     for (let row of rows) {
         let [header, data] = row.split(hdSeperator); // header = "1", data = ":::::::::::"
-        table.push(["CO" + header + "|hd", ...data.split(dataSeperator)]);
+        table.push(["CO" + header + "|h", ...data.split(dataSeperator)]);
     }
 
     if (table.length>0) {
         let headers = ["CO/PO"];
-        for (let i=1; i<table[0].length; i++) {headers.push("PO" + i + "|hd");}
+        for (let i=1; i<table[0].length; i++) {headers.push("PO" + i + "|h");}
         table.unshift(headers);
     }
 

@@ -3,8 +3,8 @@
     width: 30px;
     height: 30px;
     margin-left: 12px;
-    color: white;
-    background-color: var(--error-color);
+    background-color: white;
+    color: var(--error-color);
 }
 
 .Entry > input {

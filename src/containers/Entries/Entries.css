@@ -4,10 +4,10 @@
 
 .Entries-Ok {
     color: white;
-    background-color: var(--accent);
+    background-color: var(--primary);
 }
 
 .Entries-Cancel {
-    color: white;
-    background-color: var(--error-color);
+    background-color: white;
+    color: var(--error-color);
 }

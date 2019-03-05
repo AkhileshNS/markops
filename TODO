@@ -18,4 +18,10 @@
 
 8) Setup ways to get the display Info // DONE
 
+8.5) Running into bugs: Fix CO/PO Table
+    a) Remove ability to add and delete rows and columns in table // DONE
+    b) Remove connection with local DB // DONE
+
+8.75) Fix remove test button not working
+
 9) Setup dummy database to link the question setup
