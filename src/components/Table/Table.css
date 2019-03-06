@@ -8,6 +8,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 90vw;
+    overflow-x: scroll;
 }
 
 .row {
@@ -17,7 +19,6 @@
 }
 
 .column {
-    flex: 1;
     padding: 6px;
     border: 0.5px solid var(--table-gray);
     display: flex;
@@ -25,7 +26,6 @@
     align-items: center;
     cursor: pointer;
     overflow: hidden;
-    width: 75px;
 }
 
 .column > p {
@@ -97,4 +97,9 @@
 
 .deletion:hover {
     color: var(--error-color);
+}
+
+.nohovereffects:hover {
+    border-bottom: 0.5px solid var(--table-gray);
+    cursor: default;
 }

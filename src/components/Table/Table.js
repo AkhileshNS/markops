@@ -5,6 +5,9 @@ import React from 'react';
 // Internal Components and CSS
 import "./Table.css";
 
+// Utility Functions
+import {extractNumber} from './functions';
+
 const Table = props => {
     let tables = [props.current];
     let Table = [];
@@ -24,6 +27,9 @@ const Table = props => {
 
                 let containerStyle = "";
                 let textStyle = "";
+                let columnStyle = {
+                    minWidth: "75px"
+                };
                 if (info.includes("|")) {
                     let keys = info.split("|");
                     info = keys[0];
@@ -63,20 +69,40 @@ const Table = props => {
                                 containerStyle += "deletion ";
                                 break;
                             }
-                            default: break;
+                            case "e": {
+                                containerStyle += "nohovereffects ";
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
                         }
                     }
+
+                    let value = extractNumber(keys[1]);
+                    if (value!==null) {
+                        columnStyle = {
+                            minWidth: (value[0]*75) + "px"
+                        };
+                    }
+
                 }
 
                 if (i%2===1) {
                     containerStyle += "grey ";
                 }
 
-                if (i===props.selected[0] && j===props.selected[1]) {
-                    containerStyle += "selected ";
+                if ("selected" in props) {
+                    if (i===props.selected[0] && j===props.selected[1]) {
+                        containerStyle += "selected ";
+                    }
                 }
 
-                columns.push(<td onClick={() => props.onClick(i, j)} key={j} className={"column " + containerStyle}>
+                columns.push(<td 
+                    onClick={("onClick" in props ? () => props.onClick(i, j) : null)} 
+                    key={j} 
+                    className={"column " + containerStyle}
+                    style={columnStyle}>
                     <p className={textStyle}>{info}</p>
                 </td>);
             }

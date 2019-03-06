@@ -10,6 +10,7 @@ import Entries from '../../containers/Entries/Entries';
 import Bottombar from '../../components/Bottombar/Bottombar';
 import FloatingControls from '../../components/FloatingControls/FloatingControls';
 import Modal from '../../components/Modal/Modal';
+import Table from '../../components/Table/Table';
 
 // Database Functions
 import {
@@ -18,7 +19,7 @@ import {
     getTableConfig, 
     setTableConfig
 } from '../../database/controller';
-import {validateOptions} from './functions';
+import {validateOptions, constructTable} from './functions';
 
 // [name, CO, PO, max]
 let placeholder = ":::";
@@ -28,10 +29,12 @@ class Config extends Component {
     state={
         current: "", 
         options: {},
-        visible: false,
+        visible_add: false,
+        visible_table: false,
         newName: "",
         department: "",
-        subject: ""
+        subject: "",
+        table: null
     }
 
     componentDidMount() {
@@ -55,7 +58,7 @@ class Config extends Component {
         let newName = this.state.newName,
         options = {...this.state.options};
         options[newName] = placeholders;
-        this.setState({options, visible: false, newName: ""});
+        this.setState({options, visible_add: false, newName: ""});
     }
 
     removeTest = () => {
@@ -70,15 +73,22 @@ class Config extends Component {
         }, err => console.log(err));
     }
 
+    showTable = () => {
+        this.setState({table: constructTable(this.state.options)}, () => {
+            console.log(this.state.table);
+            this.setState({visible_table: true});
+        });
+    }
+
     render() {
-        let {current, options, visible, newName, department, subject} = this.state;
+        let {current, options, visible_add, newName, department, subject, visible_table, table} = this.state;
         let paths = this.props.location.pathname.split("/");
         let details = paths[1].split("_");
         let Class = details[1];
         let section = details[2];
 
         return <div className="Config">
-            <Modal visible={visible} closeModal={() => this.setState({visible: false})}>
+            <Modal visible={visible_add} closeModal={() => this.setState({visible_add: false})}>
                 <div className="Config-Modal">
                     <p>Please enter a short unique name for the test/exam you are adding</p>
                     <input 
@@ -101,6 +111,11 @@ class Config extends Component {
                         </button>
                     </div>
                 </div>
+            </Modal>
+            <Modal visible={visible_table} closeModal={() => this.setState({visible_table: false})}>
+                <Table 
+                    current={table}
+                />
             </Modal>
             <Appbar title="Complete Configuration"/>
             <h2>Department of {department}</h2>
@@ -128,6 +143,10 @@ class Config extends Component {
                 options={[{
                     value: "Back",
                     onClick: () => this.props.history.goBack()
+                },{
+                    value: "Check",
+                    disabled: !validateOptions(this.state.options),
+                    onClick: this.showTable
                 },{
                     value: "Next",
                     disabled: !validateOptions(this.state.options),
