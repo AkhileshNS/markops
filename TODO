@@ -39,6 +39,7 @@
 13) Start Working on the input page // DONE
 
 14) Add a table to the main page: 
-    a) Setup selecting and manipulating cell values
-    b) Setup input at the top of the table
-    c) Setup reconstruction of the table based on selection
+    a) Setup reconstruction of the table based on selection // DONE
+    b) Setup the ability to add and remove rows  
+    c) Setup selecting and manipulating cell values. 
+    d) Setup input at the top of the table

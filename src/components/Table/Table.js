@@ -28,7 +28,8 @@ const Table = props => {
                 let containerStyle = "";
                 let textStyle = "";
                 let columnStyle = {
-                    minWidth: "75px"
+                    minWidth: "70px",
+                    maxWidth: "70px"
                 };
                 if (info.includes("|")) {
                     let keys = info.split("|");
@@ -82,7 +83,8 @@ const Table = props => {
                     let value = extractNumber(keys[1]);
                     if (value!==null) {
                         columnStyle = {
-                            minWidth: (value[0]*75) + "px"
+                            minWidth: (value[0]*70) + "px",
+                            maxWidth: (value[0]*70) + "px"
                         };
                     }
 

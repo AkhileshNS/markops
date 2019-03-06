@@ -33,6 +33,7 @@
     max-width: 100%;
     word-wrap: break-word;
     white-space: pre-line;
+    font-weight: 0.8em;
 }
 
 .column:hover, .selected {
