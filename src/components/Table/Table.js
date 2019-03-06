@@ -111,7 +111,12 @@ const Table = props => {
             </tr>);
         }
 
-        Table.push(<table key={k} className="table">
+        let tableStyle = {};
+        if ("tableStyle" in props) {
+            tableStyle = props.tableStyle;
+        }
+
+        Table.push(<table style={tableStyle} key={k} className="table">
             <tbody>{rows}</tbody>
         </table>);
     }

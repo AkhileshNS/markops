@@ -69,7 +69,7 @@ class Config extends Component {
 
     next = () => {
         setTableConfig(this.props.location.pathname, this.state.options, () => {
-            this.props.history.push(this.props.location.pathname + "/input");
+            this.props.history.push(this.props.location.pathname + "/marks_input");
         }, err => console.log(err));
     }
 

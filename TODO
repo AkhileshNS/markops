@@ -36,4 +36,9 @@
 
 12.75) Add a check button that displays a table // DONE
 
-13) Start Working on the input page
+13) Start Working on the input page // DONE
+
+14) Add a table to the main page: 
+    a) Setup selecting and manipulating cell values
+    b) Setup input at the top of the table
+    c) Setup reconstruction of the table based on selection
