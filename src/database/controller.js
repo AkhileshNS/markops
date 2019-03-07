@@ -63,7 +63,20 @@ export const getTableConfig = (path, res, rej) => {
             rej("table node does not exist", 1);
         }
     })
-    .catch(err => rej("There was an error getting subject name: " + err, 2));
+    .catch(err => rej("There was an error getting table config: " + err, 2));
+}
+
+export const getTableValues = (path, res, rej) => {
+    firebase.database().ref(`tables/${path}`).once('value')
+    .then(snap => {
+        if (snap.exists()) {
+            let result = snap.val();
+            delete result.config;
+            res(getNestedArrFromTable(result));
+        } else {
+            rej("table node doesn't exist", 1);
+        }
+    }).catch(err => rej("There was an error getting table values: " + err, 2))
 }
 
 export const setSubjectRatios = (subj, value, res, rej) => {
@@ -81,7 +94,17 @@ export const setTableConfig = (path, value, res, rej) => {
         if (err) {
             rej("There was error setting the value to the table: " + err, 1);
         } else {
-            res("Successfully set value to the subject");
+            res("Successfully set value to the table");
+        }
+    });
+}
+
+export const setTableValues = (path, value, res, rej) => {
+    firebase.database().ref(`tables/${path}`).set(getTableFromNestedArr(value), err => {
+        if (err) {
+            rej("There was error setting the value to the table: " + err, 1);
+        } else {
+            res("Successfully set value to the table");
         }
     });
 }
@@ -164,4 +187,31 @@ export const getConfigFromArrObj = arrObj => {
         }
     }
     return config;
+}
+
+/* 
+    "1BM16IS009": {
+        "test 1": {
+            _id: 1,
+            Q1A: "8.7",
+            Q1B: "8.3"
+        }
+    }
+*/
+export const getNestedArrFromTable = table => {
+
+}
+
+/* 
+    [
+        ["Test","test|e6"],
+        ["PO","1"],
+        ["CO","1"],
+        ["Qname","1A"],
+        ["Max","10"],
+        ["1BM16IS009","8.7"]
+    ]
+*/
+export const getTableFromNestedArr = nestedArr => {
+
 }

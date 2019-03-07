@@ -10,32 +10,71 @@ import Table from '../../components/Table/Table';
 
 // Database and Utility Functions
 import {getTableConfig} from '../../database/controller';
-import {constructTable} from './functions';
+import {inputKeys, constructTable, checkctrl, handleKeyDown} from './functions';
 
 class MarksInput extends Component {
     state = {
         table: null,
-        selected: [-1, -1]
+        selected: [-1, -1],
+        clipboard: ""
     };
 
     componentDidMount() {
         let params = this.props.location.pathname.split("/");
-        let [department, Class, section, subject] = params[1].split("_");
+        // let [department, Class, section, subject] = params[1].split("_");
 
         getTableConfig(params[1], res => {
             let table = constructTable(res);
             table.push([]);
-            for (let i in table[1]) {
+            for (let i=0; i<table[1].length; i++) {
                 table[table.length-1].push("");
             }
-            console.log(table);
-            this.setState({table});
+            this.setState({table}, () => {
+                
+            });
         }, err => console.log(err));
+
+        document.addEventListener("keydown", this.handleKeyDown, false);
     }
 
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.handleKeyDown, false);
+    }
+
+    // Handlers
     handleTableClick = (i, j) => {
         if (i>4) {
-            
+            this.setState({selected: [i, j]});
+        }
+    }
+
+    handleKeyDown = e => {
+        let check = checkctrl(e);
+
+        if (check===0) {
+            let res = handleKeyDown(e, this.state.selected, this.state.table);
+            if (res!==null) {
+                if (parseInt(res[0])===this.state.table.length-1 && res[2][parseInt(res[0])][parseInt(res[1])]!=="") {
+                    let placeholder = [];
+                    for (let i=0; i<res[2][1].length; i++) {placeholder.push("");}
+                    res[2].push(placeholder);
+                } 
+                this.setState({selected: [res[0], res[1]], table: res[2]});
+            }
+        } else if (check===2 && this.state.clipboard!=="") {
+            let table = [...this.state.table];
+            table[this.state.selected[0]][this.state.selected[1]] = this.state.clipboard;
+            this.setState({table});
+        } else {
+            this.setState({clipboard: this.state.table[this.state.selected[0]][this.state.selected[1]]});
+        }
+    }
+
+    handleTableValueChange = e => {
+        if (inputKeys.includes(e.target.value)) {
+            let table = [...this.state.table];
+            table[this.state.selected[0]][this.state.selected[1]] = e.target.value;
+            this.setState({table});
         }
     }
 
