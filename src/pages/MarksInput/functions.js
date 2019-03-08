@@ -1,4 +1,4 @@
-export const inputKeys = ["0","1","2","3","4","5","6","7","8","9",","],
+export const inputKeys = ["0","1","2","3","4","5","6","7","8","9",",","."],
 Keys = [...inputKeys,"ArrowDown","ArrowUp","ArrowLeft","ArrowRight","Backspace","Enter"];
 
 /*
@@ -48,7 +48,7 @@ export const handleKeyDown = (e, selected, table) => {
             e.stopPropagation();
         }
         
-        if (["0","1","2","3","4","5","6","7","8","9",","].includes(e.key)) {
+        if (inputKeys.includes(e.key)) {
             Table[i][j] += e.key;
             return [i, j, Table];
 

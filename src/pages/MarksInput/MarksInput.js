@@ -9,7 +9,7 @@ import Bottombar from '../../components/Bottombar/Bottombar';
 import Table from '../../components/Table/Table';
 
 // Database and Utility Functions
-import {getTableConfig} from '../../database/controller';
+import {getTableConfig, getTableValues, setTableValues} from '../../database/controller';
 import {inputKeys, constructTable, checkctrl, handleKeyDown} from './functions';
 
 class MarksInput extends Component {
@@ -25,12 +25,26 @@ class MarksInput extends Component {
 
         getTableConfig(params[1], res => {
             let table = constructTable(res);
-            table.push([]);
-            for (let i=0; i<table[1].length; i++) {
-                table[table.length-1].push("");
-            }
-            this.setState({table}, () => {
-                
+            getTableValues(params[1], Res => {
+                table = [
+                    ...table,
+                    ...Res
+                ];
+
+                table.push([]);
+                for (let i=0; i<table[1].length; i++) {
+                    table[table.length-1].push("");
+                }
+                this.setState({table});
+
+            }, err => {
+                table.push([]);
+                for (let i=0; i<table[1].length; i++) {
+                    table[table.length-1].push("");
+                }
+                this.setState({table});
+
+                console.log(err);
             });
         }, err => console.log(err));
 
@@ -78,6 +92,11 @@ class MarksInput extends Component {
         }
     }
 
+    next = () => {
+        let params = this.props.location.pathname.split("/");
+        setTableValues(params[1], this.state.table, msg => console.log(msg), err => console.log(err));
+    }
+
     render() {
         let {table, selected} = this.state;
 
@@ -95,7 +114,7 @@ class MarksInput extends Component {
                     onClick: () => this.props.history.goBack()
                 },{
                     value: "Next",
-                    onClick: () => console.log("Next Clicked")
+                    onClick: this.next
                 }]}
             />
         </div>;

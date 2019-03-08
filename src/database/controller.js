@@ -67,12 +67,11 @@ export const getTableConfig = (path, res, rej) => {
 }
 
 export const getTableValues = (path, res, rej) => {
-    firebase.database().ref(`tables/${path}`).once('value')
+    console.log()
+    firebase.database().ref(`tables/${path}/data`).once('value')
     .then(snap => {
         if (snap.exists()) {
-            let result = snap.val();
-            delete result.config;
-            res(getNestedArrFromTable(result));
+            res(getNestedArrFromTable(snap.val()));
         } else {
             rej("table node doesn't exist", 1);
         }
@@ -100,7 +99,7 @@ export const setTableConfig = (path, value, res, rej) => {
 }
 
 export const setTableValues = (path, value, res, rej) => {
-    firebase.database().ref(`tables/${path}`).set(getTableFromNestedArr(value), err => {
+    firebase.database().ref(`tables/${path}/data`).set(getTableFromNestedArr(value), err => {
         if (err) {
             rej("There was error setting the value to the table: " + err, 1);
         } else {
@@ -199,7 +198,53 @@ export const getConfigFromArrObj = arrObj => {
     }
 */
 export const getNestedArrFromTable = table => {
+    let nestedArr = [];
 
+    for (let roll in table) {
+        let arr = [];
+        arr.push(roll);
+
+        let tests = Object.keys(table[roll]).sort((a,b) => (table[roll][a]._id - table[roll][b]._id));
+        for (let test of tests) {
+            for (let key in table[roll][test]) {
+                if (key!=="_id") {
+                    arr.push(table[roll][test][key]);
+                }
+            }
+        }
+
+        nestedArr.push(arr);
+    }
+
+    return nestedArr;
+}
+
+const extractNumber = value => {
+    if (value===null || value==="" || !/\d/.test(value)) {
+        return null;
+    }
+    return value.match(/\d+/g).map(Number);
+}
+
+export const expandArr = arr => {
+    let newArr = [];
+    for (let test of arr) {
+        if (test.includes("|")) {
+            let [name, properties] = test.split("|");
+            let appearances = extractNumber(properties);
+            if (appearances===null) {
+                newArr.push(test);
+            } else {
+                for (let i=0; i<appearances[0]; i++) {
+                    newArr.push(name);
+                }
+            }   
+        } else {
+            newArr.push(test);
+        }
+    }
+
+    return newArr;
 }
 
 /* 
@@ -213,5 +258,23 @@ export const getNestedArrFromTable = table => {
     ]
 */
 export const getTableFromNestedArr = nestedArr => {
-
+    let table = {};
+    nestedArr[0] = expandArr(nestedArr[0]);
+    for (let i=5; i<nestedArr.length; i++) {
+        let id = 1;
+        let roll = nestedArr[i][0];
+        if (roll!=="") {
+            table[roll] = {};
+            for (let j=1; j<nestedArr[i].length; j++) {
+                if (!(nestedArr[0][j] in table[roll])) {
+                    table[roll][nestedArr[0][j]] = {
+                        _id: id++
+                    };
+                }
+                table[roll][nestedArr[0][j]]["Q" + nestedArr[3][j].split("|")[0]] = nestedArr[i][j];
+                console.log(table);
+            }
+        }
+    }
+    return table;
 }
