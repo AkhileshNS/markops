@@ -23,7 +23,7 @@ class Entries extends Component {
 
     addEntry = () => {
         let entries = [...this.props.entries];
-        entries.push(",Select CO,Select PO,");
+        entries.push(":::");
         this.props.onChange(entries);
     }
 

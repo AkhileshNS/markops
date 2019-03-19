@@ -1,24 +1,38 @@
 .Output {
     margin: 50px 0px 64px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Output__Title {
+    width: 900px;
+    font-size: 24px;
+    margin: 16px 0px 0px;
+    border-bottom: 1px solid var(--gray);
+    text-align: center;
+    padding-bottom: 4px;
 }
 
 .Output__Main {
     width: 900px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    border-bottom: 1px solid var(--gray);
+    padding-bottom: 8px;
 }
 
 .Output__Main__Title {
-    font-size: 24px;
-    margin: 8px 0px;
+    font-size: 20px;
+    margin: 6px 0px;
+    font-weight: bold;
 }
 
 .Output__Main__Progress {
     display: flex;
     width: 100%;
+    margin: 2px 0px;
+    align-items: center;
 }
 
 .Output__Main__Progress__Text {

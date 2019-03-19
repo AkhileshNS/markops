@@ -92,6 +92,7 @@ class Config extends Component {
                 <div className="Config-Modal">
                     <p>Please enter a short unique name for the test/exam you are adding</p>
                     <input 
+                        autoFocus
                         type="text"
                         placeholder="(Ex: test 2, Lab, App)"
                         value={newName}
@@ -106,7 +107,7 @@ class Config extends Component {
                         </button>
                         <button 
                             className="Config-Modal-Cancel"
-                            onClick={() => this.setState({visible: false})}>
+                            onClick={() => this.setState({visible_add: false})}>
                             Cancel
                         </button>
                     </div>
@@ -138,7 +139,7 @@ class Config extends Component {
                 }}
                 removeTest={this.removeTest}
             />
-            <FloatingControls onClick={() => this.setState({visible: true})} />
+            <FloatingControls onClick={() => this.setState({visible_add: true})} />
             <Bottombar 
                 options={[{
                     value: "Back",

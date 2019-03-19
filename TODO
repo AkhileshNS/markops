@@ -45,3 +45,15 @@
     d) Setup input at the top of the table
 
 15) Setup database connection: // DONE
+
+15.5) Fix Config Errors // DONE
+
+16) Fix Ordering of Output Data // DONE
+
+17) Work on Program and Course Outcomes // DONE
+
+17.5) Work on Extracting data from Google Sheet 
+
+18) Setup Redux or something to avoid network call duplication
+
+19) Setup Config
