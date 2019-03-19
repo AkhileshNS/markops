@@ -56,7 +56,7 @@ export const getAttainments = (values) => {
                 }
 
                 attainments[testName][qname].attempted++;
-                if (parseFloat(value)>(0.7*maxValue)) {
+                if (parseFloat(value) >= (0.7*maxValue)) {
                     attainments[testName][qname].attained++;
                 }
             }

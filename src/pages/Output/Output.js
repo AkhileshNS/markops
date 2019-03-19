@@ -31,9 +31,8 @@ class Output extends Component {
         for (let test in attainments) {
             Attainments.push(<p className="Output__Main__Title">{test}</p>);
             for (let question in attainments[test]) {
-                console.log(attainments[test][question].percentage);
                 Attainments.push(<div className="Output__Main__Progress" key={test+"-"+question}>
-                    <p className="Output__Main__Progress__Texts">{question}: </p>
+                    <p className="Output__Main__Progress__Text">{question}: {attainments[test][question].percentage}%</p>
                     <ProgressBar progress={attainments[test][question].percentage}/>
                 </div>);
             }

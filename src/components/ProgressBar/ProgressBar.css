@@ -1,6 +1,5 @@
 .ProgressBar {
     flex: 1;
-    width: 100%;
     background-color: var(--primary-light);
     height: 30px;
 }

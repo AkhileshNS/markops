@@ -13,10 +13,12 @@
 
 .Output__Main__Title {
     font-size: 24px;
+    margin: 8px 0px;
 }
 
 .Output__Main__Progress {
     display: flex;
+    width: 100%;
 }
 
 .Output__Main__Progress__Text {
