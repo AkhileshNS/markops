@@ -1,0 +1,11 @@
+.ProgressBar {
+    flex: 1;
+    width: 100%;
+    background-color: var(--primary-light);
+    height: 30px;
+}
+
+.Progress {
+    background-color: var(--primary);
+    height: 100%;
+}

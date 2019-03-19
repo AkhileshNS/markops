@@ -95,6 +95,7 @@ class MarksInput extends Component {
     next = () => {
         let params = this.props.location.pathname.split("/");
         setTableValues(params[1], this.state.table, msg => console.log(msg), err => console.log(err));
+        this.props.history.push("/" + params[1] + "/output");
     }
 
     render() {

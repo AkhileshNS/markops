@@ -5,6 +5,7 @@
 }
   
 body {
+    --primary-light: #cfccff;
     --primary: #6C63FF;
     --primary-dark: #463AFF;
     --dark-tan: #111;
