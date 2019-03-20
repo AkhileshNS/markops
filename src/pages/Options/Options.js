@@ -22,7 +22,7 @@ const columns = [
     { key: "subject", name: "Subject", editable: true }
 ];
   
-const rows = createPlaceholders(placeholder, 100);
+const rows = createPlaceholders(placeholder, 1000);
 
 export default class Options extends Component {
     state = {rows, abbr: {}, options: {open: true, message: "Loading Options COnfiguration...", error: null}};
@@ -44,11 +44,10 @@ export default class Options extends Component {
     };
 
     setConfiguration = () => {
-        if (validateRows(this.state.rows)) {
-            console.log(getDepsFromRows(this.state.rows, this.state.abbr));
+        if (validateRows(this.state.rows)===1) {
             setDepartments(getDepsFromRows(this.state.rows, this.state.abbr), msg => console.log(msg), err => console.log(err));
         } else {
-            alert("All of the columns in a row must either be empty or hold a value. Any one column in a row cannot be empty while the other have values");
+            alert(validateRows(this.state.rows));
         }
     }
 
@@ -62,7 +61,7 @@ export default class Options extends Component {
             <ReactDataGrid
                 columns={columns}
                 rowGetter={i => rows[i]}
-                rowsCount={100}
+                rowsCount={1000}
                 onGridRowsUpdated={this.onGridRowsUpdated}
                 enableCellSelect={true}
                 minHeight="calc(100vh - 50px - 64px)"
