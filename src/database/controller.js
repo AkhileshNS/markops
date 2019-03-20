@@ -78,6 +78,16 @@ export const getTableValues = (path, res, rej) => {
     }).catch(err => rej("There was an error getting table values: " + err, 2))
 }
 
+export const setDepartments = (deps, res, rej) => {
+    firebase.database().ref("departments").set(deps, err => {
+        if (err) {
+            rej("There was an error setting departments", 1);
+        } else {
+            res("Successfully set departments");
+        }
+    });
+}
+
 export const setSubjectRatios = (subj, value, res, rej) => {
     firebase.database().ref(`subjects/${subj}/data`).set(getStringFromTable(value), err => {
         if (err) {
