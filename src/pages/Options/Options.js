@@ -7,6 +7,7 @@ import ReactDataGrid from "react-data-grid";
 import './Options.css';
 import Appbar from '../../components/Appbar/Appbar';
 import Bottombar from '../../components/Bottombar/Bottombar';
+import Loading from '../../components/Loading/Loading';
 
 // Internal Functions
 import {createPlaceholders, getRows, validateRows, getDepsFromRows} from './functions';
@@ -24,11 +25,11 @@ const columns = [
 const rows = createPlaceholders(placeholder, 100);
 
 export default class Options extends Component {
-    state = {rows, abbr: {}};
+    state = {rows, abbr: {}, options: {open: true, message: "Loading Options COnfiguration...", error: null}};
 
     componentDidMount() {
         getDepartments(deps => {
-            this.setState(getRows(deps));
+            this.setState({...getRows(deps), options: {open: false, message: null, error: null}});
         }, err => console.log(err));
     }
     
@@ -52,12 +53,15 @@ export default class Options extends Component {
     }
 
     render() {
+        const {open, options, rows} = this.state;
+
         return (
         <div className="Options">
+            {(open ? <Loading options={options} /> : null)}
             <Appbar title="Setup Initial Configuration" />
             <ReactDataGrid
                 columns={columns}
-                rowGetter={i => this.state.rows[i]}
+                rowGetter={i => rows[i]}
                 rowsCount={100}
                 onGridRowsUpdated={this.onGridRowsUpdated}
                 enableCellSelect={true}
