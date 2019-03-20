@@ -9,9 +9,19 @@ import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import Bottombar from '../../components/Bottombar/Bottombar';
 import {getTableValues, getTableConfig} from '../../database/controller';
 import {getAttainments, constructTable, getRates} from './functions';
+import Loading from '../../components/Loading/Loading';
 
 class Output extends Component {
-    state = {attainments: {}, tests: [], rates: {}};
+    state = {
+        attainments: {}, 
+        tests: [], 
+        rates: {},
+        options: {
+            open: true,
+            message: "Tabulating Attainment Percentage and Course Outcome Rates...",
+            error: null
+        }
+    };
 
     componentDidMount() {
         let params = this.props.location.pathname.split("/");
@@ -19,14 +29,14 @@ class Output extends Component {
             getTableValues(params[1], values => {
                 config = constructTable(config);
                 this.setState(getAttainments([...config, ...values]), () => {
-                    this.setState({rates: getRates(this.state.attainments)});
+                    this.setState({rates: getRates(this.state.attainments), options: {open: false, message: null, error: null}});
                 });
             }, err => console.log(err));
         }, err => console.log(err));
     }
 
     render() {
-        const {attainments, tests, rates} = this.state;
+        const {attainments, tests, rates, options} = this.state;
 
         let Attainments = [];
         let Rates = [];
@@ -49,6 +59,7 @@ class Output extends Component {
         }
 
         return <div className="Output">
+            {(options.open ? <Loading options={options} /> : null)}
             <Appbar title="Final Results" />
             <p className="Output__Title">Attainment Percentage</p>
             <div className="Output__Main">

@@ -11,6 +11,7 @@ import Bottombar from '../../components/Bottombar/Bottombar';
 import FloatingControls from '../../components/FloatingControls/FloatingControls';
 import Modal from '../../components/Modal/Modal';
 import Table from '../../components/Table/Table';
+import Loading from '../../components/Loading/Loading';
 
 // Database Functions
 import {
@@ -34,7 +35,12 @@ class Config extends Component {
         newName: "",
         department: "",
         subject: "",
-        table: null
+        table: null,
+        loadingOptions: {
+            open: true,
+            message: "Getting Configuration...",
+            error: null
+        }
     }
 
     componentDidMount() {
@@ -46,7 +52,7 @@ class Config extends Component {
         getSubjectName(subject, res => this.setState({subject: res}), err => console.log(err));
 
         getTableConfig(this.props.location.pathname, res => {
-            this.setState({options: res});
+            this.setState({options: res, loadingOptions: {open: false, message: null, error: null}});
         }, (err, err_code) => {
             if (err_code===2) {
                 console.log(err);
@@ -81,13 +87,14 @@ class Config extends Component {
     }
 
     render() {
-        let {current, options, visible_add, newName, department, subject, visible_table, table} = this.state;
+        let {current, options, visible_add, newName, department, subject, visible_table, table, loadingOptions} = this.state;
         let paths = this.props.location.pathname.split("/");
         let details = paths[1].split("_");
         let Class = details[1];
         let section = details[2];
 
         return <div className="Config">
+            {(loadingOptions.open ? <Loading options={loadingOptions} /> : null)}
             <Modal visible={visible_add} closeModal={() => this.setState({visible_add: false})}>
                 <div className="Config-Modal">
                     <p>Please enter a short unique name for the test/exam you are adding</p>

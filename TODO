@@ -52,7 +52,9 @@
 
 17) Work on Program and Course Outcomes // DONE
 
-17.5) Work on Extracting data from Google Sheet 
+17.5) Work on Extracting data from Google Sheet [Optional]
+
+17.75) Work on a Loading Screen // DONE
 
 18) Setup Redux or something to avoid network call duplication
 

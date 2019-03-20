@@ -7,6 +7,7 @@ import './MarksInput.css';
 import Appbar from '../../components/Appbar/Appbar';
 import Bottombar from '../../components/Bottombar/Bottombar';
 import Table from '../../components/Table/Table';
+import Loading from '../../components/Loading/Loading';
 
 // Database and Utility Functions
 import {getTableConfig, getTableValues, setTableValues} from '../../database/controller';
@@ -16,7 +17,12 @@ class MarksInput extends Component {
     state = {
         table: null,
         selected: [-1, -1],
-        clipboard: ""
+        clipboard: "",
+        options: {
+            open: true,
+            message: "Setting up marks entry table...",
+            error: null
+        }
     };
 
     componentDidMount() {
@@ -35,14 +41,14 @@ class MarksInput extends Component {
                 for (let i=0; i<table[1].length; i++) {
                     table[table.length-1].push("");
                 }
-                this.setState({table});
+                this.setState({table, options: {open: false, message: null, error: null}});
 
             }, err => {
                 table.push([]);
                 for (let i=0; i<table[1].length; i++) {
                     table[table.length-1].push("");
                 }
-                this.setState({table});
+                this.setState({table, options: {open: false, message: null, error: null}});
 
                 console.log(err);
             });
@@ -99,9 +105,10 @@ class MarksInput extends Component {
     }
 
     render() {
-        let {table, selected} = this.state;
+        let {table, selected, options} = this.state;
 
         return <div className="MarksInput">
+            {(options.open ? <Loading options={options} /> : null)}
             <Appbar title="Enter Marks and Other Details" />
             <Table 
                 current={table}
