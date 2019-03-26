@@ -152,7 +152,7 @@ class Selection extends Component {
             <Select
                 name="dep" 
                 value={department}
-                values={["ISE", "CSE"]}
+                values={["ISE"]}
                 onChange={e => this.setState({department: e.target.value, class: CLASS, section: SECTION, subject: SUBJECT})} 
             />
             <Select
