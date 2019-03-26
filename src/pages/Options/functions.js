@@ -52,17 +52,17 @@ export const validateRows = rows => {
         || (row.department!=="" && row.class!=="" && row.section!=="" && row.subject!==""))) {
             return "All of the columns in a row must either be empty or hold a value. Any one column in a row cannot be empty while the other have values";
         }
-        if (!/^[a-zA-Z]+$/g.test(row.department) && row.department!=="") {
-            return "Department can only have alphabets";
+        if (/^[0-9]+$/g.test(row.department) && row.department!=="") {
+            return "Department can't have only numbers";
         }
         if (!/^[IVX]+$/g.test(row.class) && row.class!=="") {
             return "Classes can only have roman numerals";
         }
-        if (!/^[a-zA-Z]+$/g.test(row.section) && row.section!=="") {
-            return "Sections can only have alphabets";
+        if (/^[0-9]+$/g.test(row.section) && row.section!=="") {
+            return "Sections can't have only numbers";
         }
-        if (!/^[a-zA-Z]+$/g.test(row.subject) && row.subject!=="") {
-            return "Subjects can only have alphabets";
+        if (/^[0-9]+$/g.test(row.subject) && row.subject!=="") {
+            return "Subjects can't have only numbers";
         }
     }
     return 1;

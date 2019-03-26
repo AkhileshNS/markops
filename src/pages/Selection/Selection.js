@@ -153,21 +153,21 @@ class Selection extends Component {
                 name="dep" 
                 value={department}
                 values={["ISE", "CSE"]}
-                onChange={e => this.setState({department: e.target.value})} 
+                onChange={e => this.setState({department: e.target.value, class: CLASS, section: SECTION, subject: SUBJECT})} 
             />
             <Select
                 name="class"
                 disabled={department===DEPARTMENT}
                 value={Class}
                 values={getClasses(data, department)}
-                onChange={e => this.setState({Class: e.target.value})}
+                onChange={e => this.setState({Class: e.target.value, section: SECTION, subject: SUBJECT})}
             />
             <Select
                 name="sec" 
                 disabled={Class===CLASS}
                 value={section}
                 values={getSections(data, department, Class)}
-                onChange={e => this.setState({section: e.target.value})}
+                onChange={e => this.setState({section: e.target.value, subject: SUBJECT})}
             />
             <Select
                 name="sub" 
