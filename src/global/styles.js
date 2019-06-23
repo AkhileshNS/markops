@@ -36,3 +36,11 @@ export const colors = {
   _text: "#707070",
   primary: "#6C63FF"
 };
+
+export const zIndices = {
+  level1: 1, // App
+  level2: 2, // Backdrop
+  level3: 3, // Sidebar
+  level4: 4, // Appbar
+  level5: 5
+}

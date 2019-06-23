@@ -2,11 +2,13 @@
 import styled from 'styled-components';
 
 // Global Styles
-import { colors } from 'global/styles';
+import { colors, zIndices } from 'global/styles';
 
 export const AppContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: ${colors.gray_bg};
   padding-top: 5rem;
+  padding-left: 24rem;
+  z-index: ${zIndices.level1}
 `;
