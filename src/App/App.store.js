@@ -3,7 +3,9 @@ import { decorate, observable, action } from 'mobx';
 class AppStore {
   trigger = false;
   currRoute = '/all';
-  data = [];
+  data = [{
+    name: "AY 2018-2019"
+  }];
   selected = 0;
 
   startTrigger = () => (this.trigger = true);

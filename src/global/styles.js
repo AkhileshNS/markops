@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components';
+import styled, {createGlobalStyle} from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -44,4 +44,35 @@ export const zIndices = {
   level3: 3, // Sidebar
   level4: 4, // Appbar
   level5: 5
-}
+};
+
+export const Button = styled.button`
+  background-color: ${colors.primary};
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${colors.primary_dark}
+  }
+
+  :active {
+    background-color: ${colors.primary}
+  }
+`;
+
+export const Input = styled.input`
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 4px;
+  outline: none;
+  margin: 6px 6px 0px;
+  padding: 0px 6px;
+
+  :focus {
+    border-color: ${colors.primary_dark}
+  }
+`;
