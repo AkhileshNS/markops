@@ -1,15 +1,16 @@
 // External Modules
 import React from 'react';
-import _ from 'lodash';
 
 const Router = ({currRoute, routes}) => {
   let res = null;
 
-  _.forEach(routes, ({name, component: Component}) => {
-    if (name===currRoute) {
+  for (let i=0; i<routes.length; i++) {
+    let {name, component: Component} = routes[i];
+    if (name.test(currRoute)) {
       res = <Component />;
+      break;
     }
-  })
+  }
 
   return res;
 }

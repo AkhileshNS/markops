@@ -12,6 +12,7 @@ import Router from 'global/components/Router/Router';
 
 // Page Components
 import Home from 'Home/Home';
+import Info from 'Info/Info';
 
 const App = ({trigger, currRoute}) => {
   return <AppContainer>
@@ -19,8 +20,11 @@ const App = ({trigger, currRoute}) => {
     <Router 
       currRoute={currRoute}
       routes={[{
-        name: "Home",
+        name: /^\/all$/,
         component: Home
+      },{
+        name: /^\/all/,
+        component: Info
       }]}
     />
   </AppContainer>;

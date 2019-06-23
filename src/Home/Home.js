@@ -16,7 +16,10 @@ const Home = props => {
   );
 };
 
-const mapStoresToProps = derive({});
+const mapStoresToProps = derive({
+  currRoute: "appStore",
+  setRoute: "appStore"
+});
 
 export { Home };
 export default inject(mapStoresToProps)(observer(Home));

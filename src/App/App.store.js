@@ -1,12 +1,18 @@
-import { decorate, observable, action } from "mobx";
+import { decorate, observable, action } from 'mobx';
 
 class AppStore {
   trigger = false;
-  currRoute = "Home";
+  currRoute = '/all';
 
-  startTrigger = () => this.trigger = true;
+  startTrigger = () => (this.trigger = true);
 
-  setRoute = route => this.currRoute = route;
+  setRoute = route => {
+    if (
+      Object.prototype.toString.call(route).toLowerCase() === '[object string]'
+    ) {
+      this.currRoute = route;
+    }
+  };
 }
 
 decorate(AppStore, {
