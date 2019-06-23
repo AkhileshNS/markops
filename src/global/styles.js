@@ -34,7 +34,8 @@ export const colors = {
   gray_light: "#F3F3F3",
   
   _text: "#707070",
-  primary: "#6C63FF"
+  primary: "#6C63FF",
+  primary_dark: "#5951d6"
 };
 
 export const zIndices = {
