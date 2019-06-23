@@ -7,13 +7,16 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    font-size: 62.5%;
+  }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 62.5%;
   }
 
   code {
@@ -25,3 +28,11 @@ export const GlobalStyle = createGlobalStyle`
     border: none;
   }
 `;
+
+export const colors = {
+  gray_bg: "#EBEBEB",
+  gray_light: "#F3F3F3",
+  
+  _text: "#707070",
+  primary: "#6C63FF"
+};
