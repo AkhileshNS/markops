@@ -35,7 +35,7 @@ const Sidebar = ({
           pushEntry(value);
           setValue('');
         }}>
-        Add Year
+        Add new folder
       </AddButton>
       <List>
         {dates.map((date, i) => (

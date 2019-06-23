@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import { colors, zIndices } from 'global/styles';
 
 export const AppContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: calc(100vw - 24rem);
+  height: calc(100vh - 5rem);
   background-color: ${colors.gray_bg};
-  padding-top: 5rem;
-  padding-left: 24rem;
-  z-index: ${zIndices.level1}
+  margin-top: 5rem;
+  margin-left: 24rem;
+  z-index: ${zIndices.level1};
+  position: relative;
 `;

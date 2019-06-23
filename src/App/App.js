@@ -1,5 +1,5 @@
 // External Modules
-import React from 'react';
+import React, {Fragment} from 'react';
 import {inject, observer} from 'mobx-react';
 
 // Local Styles and Controller
@@ -17,23 +17,27 @@ import Info from 'Info/Info';
 // Module Components
 import Appbar from './components/Appbar/Appbar'; 
 import Sidebar from './components/Sidebar/Sidebar';
+import Backdrop from './components/Backdrop/Backdrop';
 
 const App = ({trigger, currRoute}) => {
-  return <AppContainer>
+  return <Fragment>
     <Sidebar />
     <Appbar />
-    {trigger ? <Controller /> : null}
-    <Router 
-      currRoute={currRoute}
-      routes={[{
-        name: /^\/all$/,
-        component: Home
-      },{
-        name: /^\/all/,
-        component: Info
-      }]}
-    />
-  </AppContainer>;
+    <AppContainer>
+      <Backdrop />
+      {trigger ? <Controller /> : null}
+      <Router 
+        currRoute={currRoute}
+        routes={[{
+          name: /^\/all$/,
+          component: Home
+        },{
+          name: /^\/all/,
+          component: Info
+        }]}
+      />
+    </AppContainer>
+  </Fragment>;
 }
 
 const mapStoresToProps = derive({
