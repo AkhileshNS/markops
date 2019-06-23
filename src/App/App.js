@@ -18,6 +18,7 @@ import Info from 'Info/Info';
 import Appbar from './components/Appbar/Appbar'; 
 import Sidebar from './components/Sidebar/Sidebar';
 import Backdrop from './components/Backdrop/Backdrop';
+import { Dialog, Renamer, Form } from './components/Modal/Modal';
 
 const App = ({trigger, currRoute}) => {
   return <Fragment>
@@ -25,6 +26,7 @@ const App = ({trigger, currRoute}) => {
     <Appbar />
     <AppContainer>
       <Backdrop />
+      <Form />
       {trigger ? <Controller /> : null}
       <Router 
         currRoute={currRoute}
