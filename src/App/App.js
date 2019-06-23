@@ -16,9 +16,11 @@ import Info from 'Info/Info';
 
 // Module Components
 import Appbar from './components/Appbar/Appbar'; 
+import Sidebar from './components/Sidebar/Sidebar';
 
 const App = ({trigger, currRoute}) => {
   return <AppContainer>
+    <Sidebar />
     <Appbar />
     {trigger ? <Controller /> : null}
     <Router 
