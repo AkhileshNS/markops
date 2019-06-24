@@ -1,11 +1,16 @@
+// External Modules
 import { decorate, observable, action } from 'mobx';
+import _ from 'lodash';
+
+// Global Dummy Entry
+import { dummyEntry } from 'global/dummy';
 
 class AppStore {
   trigger = false;
   currRoute = '/all';
   data = [{
     name: "AY 2018-2019",
-    entries: [],
+    entries: [_.cloneDeep(dummyEntry)],
     selected: -1
   }];
   selected = 0;
@@ -41,7 +46,7 @@ class AppStore {
   }
 
   pushEntry = entry => {
-    console.log(entry);
+    console.log(JSON.stringify(entry));
     this.data[this.selected].entries.push(entry);
   }
 
