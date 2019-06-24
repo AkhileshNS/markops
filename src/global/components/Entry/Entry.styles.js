@@ -1,5 +1,5 @@
 // External Modules
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 // Global Styles 
 import { colors } from 'global/styles'; 
@@ -15,6 +15,15 @@ export const EntryContainer = styled.div`
   border-radius: 4px;
   margin-bottom: 1.6rem;
   padding: 0 3.2rem;
+  ${({selectable}) => selectable ? 
+    css`
+      cursor: pointer;
+
+      :hover {
+        opacity: 0.9;
+      }
+    `
+  : ""}
 `;
 
 export const EntryInfo = styled.p`

@@ -44,6 +44,10 @@ class AppStore {
     console.log(entry);
     this.data[this.selected].entries.push(entry);
   }
+
+  setEntrySelected = selected => {
+    this.data[this.selected].selected = selected;
+  }
 }
 
 decorate(AppStore, {
@@ -56,7 +60,8 @@ decorate(AppStore, {
   setRoute: action,
   setSelectedDate: action,
   pushFolder: action,
-  pushEntry: action
+  pushEntry: action,
+  setEntrySelected: action
 });
 
 export default new AppStore();

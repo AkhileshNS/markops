@@ -18,7 +18,7 @@ import { derive } from 'global/functions';
 import Entry from 'global/components/Entry/Entry';
 import { Form } from 'global/components/Modal/Modal';
 
-const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry }) => {
+const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEntrySelected }) => {
   const [visible, setVisible] = useState(false);
 
   return data.length !== 0 && selected !== -1 ? (
@@ -33,6 +33,12 @@ const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry }) => {
               <Entry
                 key={`Entries (${i}) ${courseName} and ${courseCode}`}
                 data={['Course name', courseName, 'Course code', courseCode]}
+                passedProps={{
+                  onClick() {
+                    setEntrySelected(i);
+                    setRoute(`${currRoute}/${data[selected].name}/${courseCode}`);
+                  }
+                }}
               />
             ))
           : null}
@@ -71,7 +77,8 @@ const mapStoresToProps = derive({
   setRoute: 'appStore',
   data: 'appStore',
   selected: 'appStore',
-  pushEntry: 'appStore'
+  pushEntry: 'appStore',
+  setEntrySelected: "appStore"
 });
 
 export { Home };
