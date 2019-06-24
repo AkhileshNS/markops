@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 // Global Styles
-import { zIndices, colors } from 'global/styles';
+import { zIndices, colors, Button, Input as TextInput } from 'global/styles';
 
 export const SidebarContainer = styled.div`
   width: 24rem;
@@ -20,6 +20,18 @@ export const List = styled.ul`
   width: 100%;
   height: 100%;
   list-style: none;
+  border-top: 1px solid ${colors.gray_bg};
+`;
+
+export const Input = styled(TextInput)`
+  width: calc(100% - 12px);
+  height: calc(4.8rem - 12px);
+`;
+
+export const AddButton = styled(Button)`
+  width: calc(100% - 12px);
+  height: calc(4.8rem - 12px);
+  margin: 6px;
 `;
 
 export const ListItem = styled.li`

@@ -3,12 +3,12 @@ import { decorate, observable, action } from 'mobx';
 class AppStore {
   trigger = false;
   currRoute = '/all';
-  options = {
-    dates: ['AY 2016-2017', 'AY 2017-2018', 'AY 2018-2019']
-  };
-  selected = {
-    date: 0
-  };
+  data = [{
+    name: "AY 2018-2019",
+    entries: [],
+    selected: -1
+  }];
+  selected = 0;
 
   startTrigger = () => (this.trigger = true);
 
@@ -24,20 +24,39 @@ class AppStore {
     if (
       Object.prototype.toString.call(index).toLowerCase() === '[object number]'
     ) {
-      this.selected.date = index;
+      this.selected = index;
     }
   };
+
+  pushFolder = folder => {
+    if (
+      Object.prototype.toString.call(folder).toLowerCase() === "[object string]"
+    ) {
+      this.data.push({
+        name: folder,
+        entries: [],
+        selected: -1
+      });
+    }
+  }
+
+  pushEntry = entry => {
+    console.log(entry);
+    this.data[this.selected].entries.push(entry);
+  }
 }
 
 decorate(AppStore, {
   trigger: observable,
   currRoute: observable,
-  options: observable,
+  data: observable,
   selected: observable,
 
   startTrigger: action,
   setRoute: action,
-  setSelectedDate: action
+  setSelectedDate: action,
+  pushFolder: action,
+  pushEntry: action
 });
 
 export default new AppStore();

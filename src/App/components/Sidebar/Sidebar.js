@@ -1,26 +1,53 @@
 // External Modules
-import React from 'react';
+import React, { useState } from 'react';
 import { inject, observer } from 'mobx-react';
+
+// Global Functions
+import { derive } from 'global/functions';
 
 // Local Styles
 import {
   SidebarContainer,
   List,
   ListItem,
-  ListItemTitle
+  ListItemTitle,
+  AddButton,
+  Input
 } from './Sidebar.styles';
 
 const Sidebar = ({
-  dates = ['AY 2016-2017', 'AY 2017-2018'],
+  dates = [{
+    name: 'AY 2016-2017'
+  }, {
+    name: 'AY 2017-2018'
+  }],
   selectedDate = 0,
-  setSelectedDate = i => console.log(`Item ${i+1} was selected`)
+  setSelectedDate = i => console.log(`Item ${i + 1} was selected`),
+  pushFolder = folder => console.log(`New folder ${folder} added`)
 }) => {
+  const [value, setValue] = useState('');
+
   return (
     <SidebarContainer>
+      <Input
+        placeholder='Enter Year (Ex: AY 2018-2019)'
+        value={value}
+        onChange={({ target }) => setValue(target.value)}
+      />
+      <AddButton
+        onClick={() => {
+          pushFolder(value);
+          setValue('');
+        }}>
+        Add new folder
+      </AddButton>
       <List>
         {dates.map((date, i) => (
-          <ListItem key={`Sidebar Option (${i}) ${date}`} onClick={() => setSelectedDate(i)} selected={selectedDate === i}>
-            <ListItemTitle>{date}</ListItemTitle>
+          <ListItem
+            key={`Sidebar Option (${i}) ${date.name}`}
+            onClick={() => setSelectedDate(i)}
+            selected={selectedDate === i}>
+            <ListItemTitle>{date.name}</ListItemTitle>
           </ListItem>
         ))}
       </List>
@@ -28,10 +55,11 @@ const Sidebar = ({
   );
 };
 
-const mapStoresToProps = stores => ({
-  dates: stores.appStore.options.dates,
-  selectedDate: stores.appStore.selected.date,
-  setSelectedDate: stores.appStore.setSelectedDate
+const mapStoresToProps = derive({
+  dates: 'appStore.data',
+  selectedDate: 'appStore.selected',
+  setSelectedDate: 'appStore',
+  pushFolder: 'appStore'
 });
 
 export { Sidebar };
