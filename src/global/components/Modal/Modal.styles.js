@@ -38,7 +38,7 @@ export const DialogContainer = styled.div`
 
 export const DialogMessage = styled.p`
   font-size: 1.6rem;
-  color: ${colors.primary};
+  color: ${({gray}) => gray ? "gray" : colors.primary};
   margin: 6px;
 `;
 

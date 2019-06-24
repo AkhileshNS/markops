@@ -4,7 +4,9 @@ class AppStore {
   trigger = false;
   currRoute = '/all';
   data = [{
-    name: "AY 2018-2019"
+    name: "AY 2018-2019",
+    entries: [],
+    selected: -1
   }];
   selected = 0;
 
@@ -26,14 +28,21 @@ class AppStore {
     }
   };
 
-  pushEntry = entry => {
+  pushFolder = folder => {
     if (
-      Object.prototype.toString.call(entry).toLowerCase() === "[object string]"
+      Object.prototype.toString.call(folder).toLowerCase() === "[object string]"
     ) {
       this.data.push({
-        name: entry
+        name: folder,
+        entries: [],
+        selected: -1
       });
     }
+  }
+
+  pushEntry = entry => {
+    console.log(entry);
+    this.data[this.selected].entries.push(entry);
   }
 }
 
@@ -46,6 +55,7 @@ decorate(AppStore, {
   startTrigger: action,
   setRoute: action,
   setSelectedDate: action,
+  pushFolder: action,
   pushEntry: action
 });
 

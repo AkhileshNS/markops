@@ -7,7 +7,7 @@ import { AppContainer } from 'App/App.styles';
 import Controller from 'App/App.controller';
 
 // Global Functions and Components
-import {derive} from 'global/functions';
+import { derive } from 'global/functions';
 import Router from 'global/components/Router/Router';
 
 // Modules
@@ -17,16 +17,12 @@ import Info from 'Info/Info';
 // Module Components
 import Appbar from './components/Appbar/Appbar'; 
 import Sidebar from './components/Sidebar/Sidebar';
-import Backdrop from './components/Backdrop/Backdrop';
-import { Dialog, Renamer, Form } from './components/Modal/Modal';
 
-const App = ({trigger, currRoute}) => {
+const App = ({trigger, currRoute }) => {
   return <Fragment>
     <Sidebar />
     <Appbar />
     <AppContainer>
-      <Backdrop />
-      <Form />
       {trigger ? <Controller /> : null}
       <Router 
         currRoute={currRoute}
@@ -44,7 +40,7 @@ const App = ({trigger, currRoute}) => {
 
 const mapStoresToProps = derive({
   trigger: "appStore",
-  currRoute: "appStore"
+  currRoute: "appStore",
 });
 export {App};
 export default inject(mapStoresToProps)(observer(App));

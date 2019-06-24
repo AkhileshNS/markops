@@ -16,10 +16,14 @@ import {
 } from './Sidebar.styles';
 
 const Sidebar = ({
-  dates = ['AY 2016-2017', 'AY 2017-2018'],
+  dates = [{
+    name: 'AY 2016-2017'
+  }, {
+    name: 'AY 2017-2018'
+  }],
   selectedDate = 0,
   setSelectedDate = i => console.log(`Item ${i + 1} was selected`),
-  pushEntry = entry => console.log(`New entry ${entry} added`)
+  pushFolder = folder => console.log(`New folder ${folder} added`)
 }) => {
   const [value, setValue] = useState('');
 
@@ -32,7 +36,7 @@ const Sidebar = ({
       />
       <AddButton
         onClick={() => {
-          pushEntry(value);
+          pushFolder(value);
           setValue('');
         }}>
         Add new folder
@@ -55,7 +59,7 @@ const mapStoresToProps = derive({
   dates: 'appStore.data',
   selectedDate: 'appStore.selected',
   setSelectedDate: 'appStore',
-  pushEntry: 'appStore'
+  pushFolder: 'appStore'
 });
 
 export { Sidebar };
