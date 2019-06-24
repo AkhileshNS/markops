@@ -23,7 +23,8 @@ const Sidebar = ({
   }],
   selectedDate = 0,
   setSelectedDate = i => console.log(`Item ${i + 1} was selected`),
-  pushFolder = folder => console.log(`New folder ${folder} added`)
+  pushFolder = folder => console.log(`New folder ${folder} added`),
+  setRoute
 }) => {
   const [value, setValue] = useState('');
 
@@ -45,7 +46,10 @@ const Sidebar = ({
         {dates.map((date, i) => (
           <ListItem
             key={`Sidebar Option (${i}) ${date.name}`}
-            onClick={() => setSelectedDate(i)}
+            onClick={() => {
+              setSelectedDate(i);
+              setRoute('/all')
+            }}
             selected={selectedDate === i}>
             <ListItemTitle>{date.name}</ListItemTitle>
           </ListItem>
@@ -59,7 +63,8 @@ const mapStoresToProps = derive({
   dates: 'appStore.data',
   selectedDate: 'appStore.selected',
   setSelectedDate: 'appStore',
-  pushFolder: 'appStore'
+  pushFolder: 'appStore',
+  setRoute: "appStore"
 });
 
 export { Sidebar };

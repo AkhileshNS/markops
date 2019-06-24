@@ -10,6 +10,7 @@ import {
 } from './Entry.styles';
 
 const Entry = ({
+  selectable=true,
   passedProps,
   data = [
     'Course name',
@@ -19,7 +20,7 @@ const Entry = ({
   ]
 }) => {
   return (
-    <EntryContainer {...passedProps}>
+    <EntryContainer selectable={selectable} {...passedProps}>
       <EntryInfo>
         {data[0]} <Divider>:</Divider>{' '}
         <EntryInfoHeader>{data[1]}</EntryInfoHeader>
