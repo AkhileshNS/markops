@@ -2,11 +2,12 @@
 import { decorate, observable, action } from 'mobx';
 import _ from 'lodash';
 
-// Global Dummy Entry
+// Global Dummy Entry and Database
 import { dummyEntry } from 'global/dummy';
+import db from 'global/database';
 
 class AppStore {
-  trigger = false;
+  trigger = true;
   currRoute = '/all';
   data = [{
     batch: "2016 Batch",
@@ -47,12 +48,18 @@ class AppStore {
 
   pushEntry = entry => {
     console.log(JSON.stringify(entry));
-    this.data[this.selected].entries.push(entry);
+    this.data[this.selected].entries.push(_.cloneDeep(entry));
+    db.entries.post({
+      batch: this.data[this.selected].batch,
+      ..._.cloneDeep(entry),
+    });
   }
 
   setEntrySelected = selected => {
     this.data[this.selected].selected = selected;
   }
+
+  setData = data => this.data = _.cloneDeep(data);
 }
 
 decorate(AppStore, {
@@ -66,7 +73,8 @@ decorate(AppStore, {
   setSelectedDate: action,
   pushBatch: action,
   pushEntry: action,
-  setEntrySelected: action
+  setEntrySelected: action,
+  setData: action
 });
 
 export default new AppStore();
