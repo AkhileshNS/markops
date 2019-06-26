@@ -24,7 +24,7 @@ const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEnt
   return data.length !== 0 && selected !== -1 ? (
     <HomeContainer>
       <TitleContainer>
-        <Title>{data[selected].name.replace('AY', 'Academic Year')}</Title>
+        <Title>{data[selected].batch}</Title>
         <AddButton onClick={() => setVisible(true)}>Add new entry</AddButton>
       </TitleContainer>
       <List>
@@ -36,7 +36,7 @@ const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEnt
                 passedProps={{
                   onClick() {
                     setEntrySelected(i);
-                    setRoute(`${currRoute}/${data[selected].name}/${courseCode}`);
+                    setRoute(`${currRoute}/${data[selected].batch}/${courseCode}`);
                   }
                 }}
               />
@@ -45,7 +45,7 @@ const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEnt
       </List>
       {visible ? (
         <Form
-          name={data[selected].name.replace('AY', 'Academic Year')}
+          name={data[selected].batch}
           cancel={() => setVisible(false)}
           confirm={async ({ courseName, courseCode, facultyName, file }) => {
             if (
