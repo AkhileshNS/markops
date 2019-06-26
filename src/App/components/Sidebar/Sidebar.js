@@ -31,7 +31,7 @@ const Sidebar = ({
   return (
     <SidebarContainer>
       <Input
-        placeholder='Enter Batch (Ex: Batch 2016)'
+        placeholder='Enter Batch (Ex: 2016 Batch)'
         value={value}
         onChange={({ target }) => setValue(target.value)}
       />
@@ -43,15 +43,15 @@ const Sidebar = ({
         Add new batch
       </AddButton>
       <List>
-        {dates.map((date, i) => (
+        {dates.map(({batch}, i) => (
           <ListItem
-            key={`Sidebar Option (${i}) ${date.name}`}
+            key={`Sidebar Option (${i}) ${batch}`}
             onClick={() => {
               setSelectedDate(i);
               setRoute('/all')
             }}
             selected={selectedDate === i}>
-            <ListItemTitle>{date.name}</ListItemTitle>
+            <ListItemTitle>{batch}</ListItemTitle>
           </ListItem>
         ))}
       </List>

@@ -16,7 +16,7 @@ import Output from './components/Output/Output';
 
 const Info = ({data, selected}) => {
   let { batch, entries, selected: selectedEntry } = data[selected];
-  let { courseCode, courseName, facultyName, fileData } = entries[selectedEntry];
+  let { courseCode, courseName, fileData } = entries[selectedEntry];
   let { contOutputs = [], avgOutputs } = getStats(_.cloneDeep(fileData));
 
   return <InfoContainer>
