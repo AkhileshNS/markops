@@ -15,9 +15,9 @@ describe('<Sidebar />', () => {
   it('should render a list of dates', () => {
     wrapper.setProps({
       dates: [{
-        name: 'AY 2016-2017'
+        name: '2016 Batch'
       },{
-        name: 'AY 2017-2018'
+        name: '2017 Batch'
       }]
     });
     expect(wrapper.find(List).children()).toHaveLength(2);
@@ -26,9 +26,9 @@ describe('<Sidebar />', () => {
   it('should set "selected" as true in the ListItem whose index === props.selected', () => {
     wrapper.setProps({
       dates: [{
-        name: 'AY 2016-2017'
+        name: '2016 Batch'
       },{
-        name: 'AY 2017-2018'
+        name: '2017 Batch'
       }],
       selectedDate: 1
     });

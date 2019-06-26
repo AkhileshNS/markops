@@ -15,13 +15,13 @@ import Entry from "global/components/Entry/Entry";
 import Output from './components/Output/Output';
 
 const Info = ({data, selected}) => {
-  let { name, entries, selected: selectedEntry } = data[selected];
+  let { batch, entries, selected: selectedEntry } = data[selected];
   let { courseCode, courseName, facultyName, fileData } = entries[selectedEntry];
   let { contOutputs = [], avgOutputs } = getStats(_.cloneDeep(fileData));
 
   return <InfoContainer>
     <TitleContainer>
-      <Title>{name.replace("AY","Academic Year")}</Title>
+      <Title>{batch}</Title>
     </TitleContainer>
     <Entry selectable={false} data={["Course name", courseName, "Course code", courseCode]} />
     {contOutputs.length > 0 ? <StatsContainer>

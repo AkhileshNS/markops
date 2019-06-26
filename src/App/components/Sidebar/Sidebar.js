@@ -17,13 +17,13 @@ import {
 
 const Sidebar = ({
   dates = [{
-    name: 'AY 2016-2017'
+    name: '2016 Batch'
   }, {
-    name: 'AY 2017-2018'
+    name: '2017 Batch'
   }],
   selectedDate = 0,
   setSelectedDate = i => console.log(`Item ${i + 1} was selected`),
-  pushFolder = folder => console.log(`New folder ${folder} added`),
+  pushBatch = batch => console.log(`New batch ${batch} added`),
   setRoute
 }) => {
   const [value, setValue] = useState('');
@@ -31,16 +31,16 @@ const Sidebar = ({
   return (
     <SidebarContainer>
       <Input
-        placeholder='Enter Year (Ex: AY 2018-2019)'
+        placeholder='Enter Batch (Ex: Batch 2016)'
         value={value}
         onChange={({ target }) => setValue(target.value)}
       />
       <AddButton
         onClick={() => {
-          pushFolder(value);
+          pushBatch(value);
           setValue('');
         }}>
-        Add new folder
+        Add new batch
       </AddButton>
       <List>
         {dates.map((date, i) => (
@@ -63,7 +63,7 @@ const mapStoresToProps = derive({
   dates: 'appStore.data',
   selectedDate: 'appStore.selected',
   setSelectedDate: 'appStore',
-  pushFolder: 'appStore',
+  pushBatch: 'appStore',
   setRoute: "appStore"
 });
 

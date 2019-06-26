@@ -9,7 +9,7 @@ class AppStore {
   trigger = false;
   currRoute = '/all';
   data = [{
-    name: "AY 2018-2019",
+    batch: "2016 Batch",
     entries: [_.cloneDeep(dummyEntry)],
     selected: -1
   }];
@@ -33,12 +33,12 @@ class AppStore {
     }
   };
 
-  pushFolder = folder => {
+  pushBatch = batch => {
     if (
-      Object.prototype.toString.call(folder).toLowerCase() === "[object string]"
+      Object.prototype.toString.call(batch).toLowerCase() === "[object string]"
     ) {
       this.data.push({
-        name: folder,
+        batch,
         entries: [],
         selected: -1
       });
@@ -64,7 +64,7 @@ decorate(AppStore, {
   startTrigger: action,
   setRoute: action,
   setSelectedDate: action,
-  pushFolder: action,
+  pushBatch: action,
   pushEntry: action,
   setEntrySelected: action
 });
