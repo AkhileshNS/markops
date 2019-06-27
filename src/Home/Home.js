@@ -88,15 +88,17 @@ const Home = ({
           prevCourseCode={update.visible ? update.courseCode : ""}
           prevCourseName={update.visible ? update.courseName : ""}
           prevFacultyName={update.visible ? update.facultyName : ""}
-          confirm={async ({ courseName, courseCode, facultyName, file }) => {
-            if (courseName !== '' && courseCode !== '' && facultyName !== '' && !_.isEqual(file, {})
-            && visible) {
-              let fileData = await readXlsxFile(file);
+          confirm={async ({ courseName, courseCode, facultyName, files }) => {
+            if (courseName !== '' && courseCode !== '' && facultyName !== '' 
+            && !_.isEqual(files[0], {}) && !_.isEqual(files[1], {}) && visible) {
+              let fileData = await readXlsxFile(files[0]);
+              let mappingData = await readXlsxFile(files[1]);
               pushEntry(_.cloneDeep({
                 courseName,
                 courseCode,
                 facultyName,
-                fileData
+                fileData,
+                mappingData
               }));
               setVisible(false);
             }
@@ -111,9 +113,13 @@ const Home = ({
               if (facultyName!=="") {
                 newEntry.facultyName = facultyName;
               }
-              if (!_.isEqual(file, {})) {
-                let fileData = await readXlsxFile(file);
+              if (!_.isEqual(files[0], {})) {
+                let fileData = await readXlsxFile(files[0]);
                 newEntry.fileData = fileData;
+              }
+              if (!_.isEqual(files[1], {})) {
+                let mappingData = await readXlsxFile(files[1]);
+                newEntry.mappingData = mappingData;
               }
               updateEntry(update.courseCode, newEntry);
               setUpdate({visible: false})

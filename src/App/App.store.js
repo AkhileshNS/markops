@@ -93,6 +93,9 @@ class AppStore {
       if ("fileData" in newEntry) {
         this.data[this.selected].entries[index].fileData = newEntry.fileData; 
       }
+      if ("mappingData" in newEntry) {
+        this.data[this.selected].entries[index].mappingData = newEntry.mappingData; 
+      }
       db.entries.updateEntry(this.data[this.selected].batch, courseCode, newEntry);
     }
   }
