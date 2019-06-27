@@ -6,9 +6,7 @@ import { colors } from "global/styles";
 
 export const InfoContainer = styled.div`
   width: 100%;
-  height: 100%;
   padding: 0px 2.4rem;
-  overflow-y: scroll;
 `;
 
 export const TitleContainer = styled.div`
