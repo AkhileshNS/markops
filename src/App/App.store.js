@@ -26,7 +26,7 @@ class AppStore {
     }
   };
 
-  setSelectedDate = index => {
+  setSelected = index => {
     if (
       Object.prototype.toString.call(index).toLowerCase() === '[object number]'
     ) {
@@ -46,13 +46,63 @@ class AppStore {
     }
   }
 
+  updateBatch = (batch, newBatch) => {
+    let index = _.findIndex(this.data, {batch});
+    if (index!==-1) {
+      this.data[index].batch = newBatch;
+      db.entries.updateBatch(batch, newBatch);
+    } 
+  }
+
+  deleteBatch = batch => {
+    if (
+      Object.prototype.toString.call(batch).toLowerCase() === "[object string]"
+    ) {
+      let index = _.findIndex(this.data, {batch});
+      if (index!==-1) {
+        this.currRoute = "/all";
+        this.data.splice(index, 1);
+        db.entries.deleteByBatch(batch);
+        if (this.selected>=index) {
+          this.selected = -1;
+        }
+      }
+    }
+  }
+
   pushEntry = entry => {
-    console.log(JSON.stringify(entry));
     this.data[this.selected].entries.push(_.cloneDeep(entry));
     db.entries.post({
       batch: this.data[this.selected].batch,
       ..._.cloneDeep(entry),
     });
+  }
+
+  updateEntry = (courseCode, newEntry) => {
+    let index = _.findIndex(this.data[this.selected].entries, {courseCode});
+    if (index!==-1) {
+      if ("courseCode" in newEntry) {
+        this.data[this.selected].entries[index].courseCode = newEntry.courseCode; 
+      }
+      if ("courseName" in newEntry) {
+        this.data[this.selected].entries[index].courseName = newEntry.courseName; 
+      }
+      if ("facultyName" in newEntry) {
+        this.data[this.selected].entries[index].facultyName = newEntry.facultyName; 
+      }
+      if ("fileData" in newEntry) {
+        this.data[this.selected].entries[index].fileData = newEntry.fileData; 
+      }
+      db.entries.updateEntry(this.data[this.selected].batch, courseCode, newEntry);
+    }
+  }
+
+  deleteEntry = courseCode => {
+    let index = _.findIndex(this.data[this.selected].entries, {courseCode: courseCode});
+    if (index!==-1) {
+      this.data[this.selected].entries.splice(index, 1);
+      db.entries.deleteByEntry(this.data[this.selected].batch, courseCode);
+    }
   }
 
   setEntrySelected = selected => {
@@ -70,9 +120,13 @@ decorate(AppStore, {
 
   startTrigger: action,
   setRoute: action,
-  setSelectedDate: action,
+  setSelected: action,
   pushBatch: action,
+  updateBatch: action,
+  deleteBatch: action,
   pushEntry: action,
+  updateEntry: action,
+  deleteEntry: action,
   setEntrySelected: action,
   setData: action
 });
