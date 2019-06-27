@@ -26,7 +26,7 @@ class AppStore {
     }
   };
 
-  setSelectedDate = index => {
+  setSelected = index => {
     if (
       Object.prototype.toString.call(index).toLowerCase() === '[object number]'
     ) {
@@ -46,13 +46,48 @@ class AppStore {
     }
   }
 
-  pushEntry = entry => {
-    console.log(JSON.stringify(entry));
-    this.data[this.selected].entries.push(_.cloneDeep(entry));
+  updateBatch = (batch, newBatch) => {
+    let index = _.findIndex(this.data, {batch});
+    if (index!==-1) {
+      this.data[index].batch = newBatch;
+    } 
+  }
+
+  deleteBatch = batch => {
+    if (
+      Object.prototype.toString.call(batch).toLowerCase() === "[object string]"
+    ) {
+      let index = _.findIndex(this.data, {batch});
+      if (index!==-1) {
+        this.currRoute = "/all";
+        this.data.splice(index, 1);
+        db.entries.deleteByBatch(batch);
+        if (this.selected>=index) {
+          this.selected = -1;
+        }
+      }
+    }
+  }
+
+  postEntry = entry => {
+    let index = _.findIndex(this.data[this.selected].entries, {courseCode: entry.courseCode});
+    if (index===-1) {
+      this.data[this.selected].entries.push(_.cloneDeep(entry));
+    } else {
+      this.data[this.selected].entries[index] = _.cloneDeep(entry);
+    }
     db.entries.post({
       batch: this.data[this.selected].batch,
       ..._.cloneDeep(entry),
     });
+  }
+
+  deleteEntry = courseCode => {
+    let index = _.findIndex(this.data[this.selected].entries, {courseCode: courseCode});
+    if (index!==-1) {
+      this.data[this.selected].entries.splice(index, 1);
+      db.entries.deleteByEntry(this.data[this.selected].batch, courseCode);
+    }
   }
 
   setEntrySelected = selected => {
@@ -70,9 +105,12 @@ decorate(AppStore, {
 
   startTrigger: action,
   setRoute: action,
-  setSelectedDate: action,
+  setSelected: action,
   pushBatch: action,
-  pushEntry: action,
+  updateBatch: action,
+  deleteBatch: action,
+  postEntry: action,
+  deleteEntry: action,
   setEntrySelected: action,
   setData: action
 });

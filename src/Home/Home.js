@@ -30,7 +30,7 @@ const EntryMenu = () => (
   </ContextMenu>
 );
 
-const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEntrySelected }) => {
+const Home = ({ data = [], selected = -1, currRoute, setRoute, postEntry, deleteEntry, setEntrySelected }) => {
   const [visible, setVisible] = useState(false);
 
   return data.length !== 0 && selected !== -1 ? (
@@ -72,7 +72,7 @@ const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEnt
               !_.isEqual(file, {})
             ) {
               let fileData = await readXlsxFile(file);
-              pushEntry(
+              postEntry(
                 _.cloneDeep({
                   courseName,
                   courseCode,
@@ -95,7 +95,8 @@ const mapStoresToProps = derive({
   setRoute: 'appStore',
   data: 'appStore',
   selected: 'appStore',
-  pushEntry: 'appStore',
+  postEntry: 'appStore',
+  deleteEntry: 'appStore',
   setEntrySelected: "appStore"
 });
 

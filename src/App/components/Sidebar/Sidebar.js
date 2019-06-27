@@ -1,10 +1,11 @@
 // External Modules
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
-// Global Functions
+// Global Functions and Components
 import { derive } from 'global/functions';
+import { Dialog, Renamer } from 'global/components/Modal/Modal';
 
 // Local Styles
 import {
@@ -18,10 +19,10 @@ import {
 
 const SidebarMenu = () => (
   <ContextMenu id="sidebar-menu">
-    <MenuItem onClick={(e, data) => console.log(`Rename ${data.batch}`)}>
+    <MenuItem onClick={(e, data) => data.setUpdate(data.batch)}>
       Rename
     </MenuItem>
-    <MenuItem onClick={(e, data) => console.log(`Delete ${data.batch}`)}>
+    <MenuItem onClick={(e, data) => data.setDeletion(data.batch)}>
       Delete
     </MenuItem>
   </ContextMenu>
@@ -34,13 +35,17 @@ const Sidebar = ({
     name: '2017 Batch'
   }],
   selectedDate = 0,
-  setSelectedDate = i => console.log(`Item ${i + 1} was selected`),
+  setSelected = i => console.log(`Item ${i + 1} was selected`),
   pushBatch = batch => console.log(`New batch ${batch} added`),
+  updateBatch = batch => console.log(`${batch} updated`),
+  deleteBatch = batch => console.log(`${batch} deleted`),
   setRoute
 }) => {
   const [value, setValue] = useState('');
+  const [deletion, setDeletion] = useState(''); // deletion and update hold the name of a batch 
+  const [update, setUpdate] = useState('');
 
-  return (
+  return <Fragment>
     <SidebarContainer>
       <Input
         placeholder='Enter Batch (Ex: 2016 Batch)'
@@ -60,10 +65,12 @@ const Sidebar = ({
             id="sidebar-menu"
             key={`Sidebar Option (${i}) ${batch}`}
             batch={batch}
-            collect={({batch}) => ({batch})}>
+            setDeletion={setDeletion}
+            setUpdate={setUpdate}
+            collect={({batch, setDeletion, setUpdate}) => ({batch, setDeletion, setUpdate})}>
             <ListItem
               onClick={() => {
-                setSelectedDate(i);
+                setSelected(i);
                 setRoute('/all')
               }}
               selected={selectedDate === i}>
@@ -74,15 +81,34 @@ const Sidebar = ({
       </List>
       <SidebarMenu />
     </SidebarContainer>
-  );
+    {deletion!=="" ? <Dialog 
+      message="Are you sure you wish to delete this batch? (Note. All the entries inside the batch will be deleted as well)" 
+      confirm={() => {
+        deleteBatch(deletion);
+        setDeletion("");
+      }} 
+      cancel={() => setDeletion("")} 
+    /> : null}
+    {update!=="" ? <Renamer 
+      message="Enter the new batch name:-"
+      prevName={update}
+      confirm={value => {
+        updateBatch(update, value);
+        setUpdate("");
+      }}
+      cancel={() => setUpdate("")}
+    /> : null}
+  </Fragment>;
 };
 
 const mapStoresToProps = derive({
   dates: 'appStore.data',
   selectedDate: 'appStore.selected',
-  setSelectedDate: 'appStore',
   pushBatch: 'appStore',
-  setRoute: "appStore"
+  updateBatch: 'appStore',
+  deleteBatch: "appStore",
+  setRoute: "appStore",
+  setSelected: "appStore"
 });
 
 export { Sidebar };
