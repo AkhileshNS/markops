@@ -23,6 +23,7 @@ export const List = styled.ul`
   height: 100%;
   list-style: none;
   border-top: 1px solid ${colors.gray_bg};
+  overflow-y: auto;
 `;
 
 export const Input = styled(TextInput)`

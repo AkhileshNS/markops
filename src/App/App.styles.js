@@ -12,4 +12,5 @@ export const AppContainer = styled.div`
   margin-left: 24rem;
   z-index: ${zIndices.level1};
   position: relative;
+  overflow-y: auto;
 `;
