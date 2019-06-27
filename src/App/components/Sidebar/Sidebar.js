@@ -1,6 +1,7 @@
 // External Modules
 import React, { useState } from 'react';
 import { inject, observer } from 'mobx-react';
+import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
 // Global Functions
 import { derive } from 'global/functions';
@@ -14,6 +15,17 @@ import {
   AddButton,
   Input
 } from './Sidebar.styles';
+
+const SidebarMenu = () => (
+  <ContextMenu id="sidebar-menu">
+    <MenuItem onClick={(e, data) => console.log(`Rename ${data.batch}`)}>
+      Rename
+    </MenuItem>
+    <MenuItem onClick={(e, data) => console.log(`Delete ${data.batch}`)}>
+      Delete
+    </MenuItem>
+  </ContextMenu>
+);
 
 const Sidebar = ({
   dates = [{
@@ -44,17 +56,23 @@ const Sidebar = ({
       </AddButton>
       <List>
         {dates.map(({batch}, i) => (
-          <ListItem
+          <ContextMenuTrigger 
+            id="sidebar-menu"
             key={`Sidebar Option (${i}) ${batch}`}
-            onClick={() => {
-              setSelectedDate(i);
-              setRoute('/all')
-            }}
-            selected={selectedDate === i}>
-            <ListItemTitle>{batch}</ListItemTitle>
-          </ListItem>
+            batch={batch}
+            collect={({batch}) => ({batch})}>
+            <ListItem
+              onClick={() => {
+                setSelectedDate(i);
+                setRoute('/all')
+              }}
+              selected={selectedDate === i}>
+              <ListItemTitle>{batch}</ListItemTitle>
+            </ListItem>
+          </ContextMenuTrigger>
         ))}
       </List>
+      <SidebarMenu />
     </SidebarContainer>
   );
 };

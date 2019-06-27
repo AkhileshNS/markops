@@ -9,6 +9,7 @@
     "mobx": "^5.10.1",
     "mobx-react": "^6.1.1",
     "react": "^16.8.6",
+    "react-contextmenu": "^2.11.0",
     "react-dom": "^16.8.6",
     "react-files": "^2.4.8",
     "react-scripts": "3.0.1",
