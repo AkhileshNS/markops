@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 // Global Styles
-import { colors, Button } from 'global/styles';
+import { colors, Button, contextMenuStyles } from 'global/styles';
 
 export const HomeContainer = styled.div`
   width: 100%;
@@ -10,6 +10,8 @@ export const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 2.4rem;
+
+  ${contextMenuStyles}
 `;
 
 export const TitleContainer = styled.div`

@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 // Global Styles
-import { zIndices, colors, Button, Input as TextInput } from 'global/styles';
+import { zIndices, colors, Button, Input as TextInput, contextMenuStyles } from 'global/styles';
 
 export const SidebarContainer = styled.div`
   width: 24rem;
@@ -14,6 +14,8 @@ export const SidebarContainer = styled.div`
   top: 0; left: 0;
   display: flex;
   flex-direction: column;
+
+  ${contextMenuStyles}
 `;
 
 export const List = styled.ul`

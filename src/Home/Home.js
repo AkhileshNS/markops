@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { inject, observer } from 'mobx-react';
 import _ from 'lodash';
 import readXlsxFile from 'read-excel-file';
+import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
 // Local Styles
 import {
@@ -18,6 +19,17 @@ import { derive } from 'global/functions';
 import Entry from 'global/components/Entry/Entry';
 import { Form } from 'global/components/Modal/Modal';
 
+const EntryMenu = () => (
+  <ContextMenu id="entry-menu">
+    <MenuItem onClick={(e, data) => console.log(`Edit ${data.courseCode}`)}>
+      Edit
+    </MenuItem>
+    <MenuItem onClick={(e, data) => console.log(`Delete ${data.courseCode}`)}>
+      Delete
+    </MenuItem>
+  </ContextMenu>
+);
+
 const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEntrySelected }) => {
   const [visible, setVisible] = useState(false);
 
@@ -30,16 +42,21 @@ const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEnt
       <List>
         {selected >= 0
           ? data[selected].entries.map(({ courseName, courseCode }, i) => (
-              <Entry
+              <ContextMenuTrigger
+                id="entry-menu"
                 key={`Entries (${i}) ${courseName} and ${courseCode}`}
-                data={['Course name', courseName, 'Course code', courseCode]}
-                passedProps={{
-                  onClick() {
-                    setEntrySelected(i);
-                    setRoute(`${currRoute}/${data[selected].batch}/${courseCode}`);
-                  }
-                }}
-              />
+                courseCode={courseCode}
+                collect={({courseCode}) => ({courseCode})}>
+                <Entry
+                  data={['Course name', courseName, 'Course code', courseCode]}
+                  passedProps={{
+                    onClick() {
+                      setEntrySelected(i);
+                      setRoute(`${currRoute}/${data[selected].batch}/${courseCode}`);
+                    }
+                  }}
+                />
+              </ContextMenuTrigger>
             ))
           : null}
       </List>
@@ -68,6 +85,7 @@ const Home = ({ data = [], selected = -1, currRoute, setRoute, pushEntry, setEnt
           }}
         />
       ) : null}
+      <EntryMenu />
     </HomeContainer>
   ) : null;
 };
