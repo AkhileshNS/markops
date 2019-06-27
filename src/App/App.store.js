@@ -50,6 +50,7 @@ class AppStore {
     let index = _.findIndex(this.data, {batch});
     if (index!==-1) {
       this.data[index].batch = newBatch;
+      db.entries.updateBatch(batch, newBatch);
     } 
   }
 
@@ -69,17 +70,31 @@ class AppStore {
     }
   }
 
-  postEntry = entry => {
-    let index = _.findIndex(this.data[this.selected].entries, {courseCode: entry.courseCode});
-    if (index===-1) {
-      this.data[this.selected].entries.push(_.cloneDeep(entry));
-    } else {
-      this.data[this.selected].entries[index] = _.cloneDeep(entry);
-    }
+  pushEntry = entry => {
+    this.data[this.selected].entries.push(_.cloneDeep(entry));
     db.entries.post({
       batch: this.data[this.selected].batch,
       ..._.cloneDeep(entry),
     });
+  }
+
+  updateEntry = (courseCode, newEntry) => {
+    let index = _.findIndex(this.data[this.selected].entries, {courseCode});
+    if (index!==-1) {
+      if ("courseCode" in newEntry) {
+        this.data[this.selected].entries[index].courseCode = newEntry.courseCode; 
+      }
+      if ("courseName" in newEntry) {
+        this.data[this.selected].entries[index].courseName = newEntry.courseName; 
+      }
+      if ("facultyName" in newEntry) {
+        this.data[this.selected].entries[index].facultyName = newEntry.facultyName; 
+      }
+      if ("fileData" in newEntry) {
+        this.data[this.selected].entries[index].fileData = newEntry.fileData; 
+      }
+      db.entries.updateEntry(this.data[this.selected].batch, courseCode, newEntry);
+    }
   }
 
   deleteEntry = courseCode => {
@@ -109,7 +124,8 @@ decorate(AppStore, {
   pushBatch: action,
   updateBatch: action,
   deleteBatch: action,
-  postEntry: action,
+  pushEntry: action,
+  updateEntry: action,
   deleteEntry: action,
   setEntrySelected: action,
   setData: action

@@ -25,7 +25,9 @@ export const getAll = async () => {
 
 export const deleteByBatch = async batch => {
   try {
-    await db.entries.where('batch').equals(batch);
+    await db.entries
+      .where("batch").equals(batch)
+      .delete();
     return { err: null };
   } catch (err) {
     return { err };
@@ -35,12 +37,35 @@ export const deleteByBatch = async batch => {
 export const deleteByEntry = async (batch, courseCode) => {
   try {
     await db.entries
-      .where('batch')
-      .equals(batch)
-      .and('courseCode')
-      .equals(courseCode);
+      .where("[batch+courseCode]")
+      .equals([batch, courseCode])
+      .delete();
     return { err: null };
   } catch (err) {
+    return { err };
+  }
+};
+
+export const updateBatch = async (oldBatchName, batch) => {
+  try {
+    await db.entries
+      .where("batch").equals(oldBatchName)
+      .modify({ batch });
+    return { err: null };
+  } catch (err) {
+    return { err };
+  }
+};
+
+export const updateEntry = async (batch, courseCode, entry) => {
+  try {
+    await db.entries
+      .where("[batch+courseCode]")
+      .equals([batch, courseCode])
+      .modify(_.cloneDeep(entry));
+    return { err: null };
+  } catch (err) {
+    console.log(err);
     return { err };
   }
 };
