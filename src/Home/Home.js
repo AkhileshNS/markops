@@ -11,7 +11,13 @@ import {
   TitleContainer,
   Title,
   AddButton,
-  List
+  List,
+  DashBoard,
+  DashBoardTitle,
+  Scores,
+  Score,
+  ScoreTitle,
+  ScoreValue
 } from './Home.styles';
 import {getStats, getPO} from './Home.functions';
 
@@ -49,6 +55,9 @@ const Home = ({
   const [visible, setVisible] = useState(false);
   const [deletion, setDeletion] = useState(""); // deletion holds a courseCode
   const [update, setUpdate] = useState({visible: false}); // update contains an entry
+  const PO = getPO(selected>=0 ?
+    "entries" in data[selected] ? _.cloneDeep(data[selected].entries) : [] : []
+  );
 
   return data.length !== 0 && selected !== -1 ? (
     <HomeContainer>
@@ -56,6 +65,24 @@ const Home = ({
         <Title>{data[selected].batch}</Title>
         <AddButton onClick={() => setVisible(true)}>Add new entry</AddButton>
       </TitleContainer>
+      {(PO.length===0 ? null : <DashBoard>
+        <DashBoardTitle>Program Outcome Count Attainment</DashBoardTitle>
+        <Scores>
+          {PO.map(({PO, count}, i) => <Score key={PO + i}>
+            <ScoreTitle>{PO.replace(/program outcome /i, "PO")}</ScoreTitle>
+            <ScoreValue>{Math.round(count.percentage * 100) / 100}</ScoreValue>
+          </Score>)}
+        </Scores>
+      </DashBoard>)}
+      {(PO.length===0 ? null : <DashBoard>
+        <DashBoardTitle>Program Outcome Average Attainment</DashBoardTitle>
+        <Scores>
+          {PO.map(({PO, average}, i) => <Score key={PO + i}>
+            <ScoreTitle>{PO.replace(/program outcome /i, "PO")}</ScoreTitle>
+            <ScoreValue>{Math.round(average.percentage * 100) / 100}</ScoreValue>
+          </Score>)}
+        </Scores>
+      </DashBoard>)}
       <List>
         {selected >= 0
           ? data[selected].entries.map(({ courseName, courseCode, facultyName }, i) => (

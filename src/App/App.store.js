@@ -3,7 +3,6 @@ import { decorate, observable, action } from 'mobx';
 import _ from 'lodash';
 
 // Global Dummy Entry and Database
-import { dummyEntry } from 'global/dummy';
 import db from 'global/database';
 
 class AppStore {

@@ -11,6 +11,48 @@ export const HomeContainer = styled.div`
   ${contextMenuStyles}
 `;
 
+export const DashBoard = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: white;
+  color: ${colors.primary};
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 1.6rem;
+`;
+
+export const DashBoardTitle = styled.p`
+  font-size: 1.6rem;
+  padding-bottom: 8px;
+`;
+
+export const Scores = styled.div`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+`;
+
+export const Score = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: ${colors.primary_tint};
+  align-items: center;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 2px;
+`;
+
+export const ScoreTitle = styled.span`
+  font-size: 1.4rem;
+  padding-left: 6px;
+`;
+
+export const ScoreValue = styled.span`
+  font-size: 2rem;
+`;
+
 export const TitleContainer = styled.div`
   width: 100%;
   min-height: 6.4rem;
