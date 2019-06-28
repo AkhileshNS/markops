@@ -74,7 +74,7 @@ let Form = ({
     courseName: prevCourseName,
     courseCode: prevCourseCode,
     facultyName: prevFacultyName,
-    file: {}
+    files: [{},{}]
   });
 
   return <Fragment>
@@ -119,7 +119,7 @@ let Form = ({
           }
         />
         <DialogMessage>
-          Upload an excel sheet with the data to be parsed in the specified
+          Upload an excel sheet with the marks of the students for each question in the specified
           format:-
         </DialogMessage>
         <Files
@@ -127,7 +127,7 @@ let Form = ({
           onChange={files =>
             setState(
               produce(state, draft => {
-                draft.file = files[0];
+                draft.files[0] = files[0];
               })
             )
           }
@@ -140,7 +140,29 @@ let Form = ({
           clickable>
           Drop files here or click to upload
         </Files>
-        <DialogMessage gray>{"name" in state.file ? state.file.name: ""}</DialogMessage>
+        <DialogMessage gray>{"name" in state.files[0] ? state.files[0].name: ""}</DialogMessage>
+        <DialogMessage>
+          Upload an excel sheet containing a table of weights between CO and PO:-
+        </DialogMessage>
+        <Files
+          className='files-dropzone'
+          onChange={files =>
+            setState(
+              produce(state, draft => {
+                draft.files[1] = files[0];
+              })
+            )
+          }
+          onError={err => console.log(err.code + ':' + err.message)}
+          accepts={['.xlsx']}
+          multiple={false}
+          maxFiles={1}
+          maxFileSize={10000000}
+          minFileSize={0}
+          clickable>
+          Drop files here or click to upload
+        </Files>
+        <DialogMessage gray>{"name" in state.files[1] ? state.files[1].name: ""}</DialogMessage>
         <DialogOptions>
           <DialogButton onClick={() => confirm(_.cloneDeep(state))}>
             Confirm

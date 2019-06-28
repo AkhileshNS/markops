@@ -1,11 +1,9 @@
 // External Module
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import _ from 'lodash';
 
-// Local Styles and functions
-import { InfoContainer, TitleContainer, Title, StatsContainer } from './Info.styles';
-import { getStats } from './Info.functions';
+// Local Styles 
+import { InfoContainer, TitleContainer, Title, StatsContainer, StatsTitle } from './Info.styles';
  
 // Global Functions and Components
 import { derive } from 'global/functions';
@@ -16,8 +14,7 @@ import Output from './components/Output/Output';
 
 const Info = ({data, selected}) => {
   let { batch, entries, selected: selectedEntry } = data[selected];
-  let { courseCode, courseName, fileData } = entries[selectedEntry];
-  let { contOutputs = [], avgOutputs } = getStats(_.cloneDeep(fileData));
+  let { courseCode, courseName, contOutputs = [], avgOutputs = [] } = entries[selectedEntry];
 
   return <InfoContainer>
     <TitleContainer>
@@ -25,13 +22,15 @@ const Info = ({data, selected}) => {
     </TitleContainer>
     <Entry selectable={false} data={["Course name", courseName, "Course code", courseCode]} />
     {contOutputs.length > 0 ? <StatsContainer>
-      {contOutputs.map(({CO, PO, percentage}, i) => <Output
-        CO={CO} PO={PO} percentage={percentage} key={`Stat (${i})`}
+      <StatsTitle>Count Attainment</StatsTitle>
+      {contOutputs.map(({CO, percentage}, i) => <Output
+        CO={CO} percentage={percentage} key={`Stat (${i})`}
       />)}
     </StatsContainer> : null}
     {avgOutputs.length > 0 ? <StatsContainer>
-      {avgOutputs.map(({CO, PO, percentage}, i) => <Output
-        CO={CO} PO={PO} percentage={percentage} key={`Stat (${i})`}
+      <StatsTitle>Average Attainment</StatsTitle>
+      {avgOutputs.map(({CO, percentage}, i) => <Output
+        CO={CO} percentage={percentage} key={`Stat (${i})`}
       />)}
     </StatsContainer> : null}
   </InfoContainer>

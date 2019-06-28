@@ -14,19 +14,19 @@ class controller extends React.Component {
       if (err===null && entries.length>0) {
         let data = [];
         for (let i=0; i<entries.length; i++) {
-          let {batch, courseName, courseCode, facultyName, fileData} = _.cloneDeep(entries[i]);
+          let {batch, courseName, courseCode, facultyName, contOutputs, avgOutputs, mappingData} = _.cloneDeep(entries[i]);
           let index = _.findIndex(data, {batch});
           if (index===-1) {
             data.push({
               batch,
               selected: -1,
               entries: [{
-                courseName, courseCode, facultyName, fileData
+                courseName, courseCode, facultyName, contOutputs, avgOutputs, mappingData
               }] 
             });
           } else {
             data[index].entries.push({
-              courseName, courseCode, facultyName, fileData
+              courseName, courseCode, facultyName, contOutputs, avgOutputs, mappingData
             });
           }
         }

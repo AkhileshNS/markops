@@ -5,14 +5,21 @@ import _ from 'lodash';
 import readXlsxFile from 'read-excel-file';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
-// Local Styles
+// Local Styles and Functions
 import {
   HomeContainer,
   TitleContainer,
   Title,
   AddButton,
-  List
-} from 'Home/Home.styles';
+  List,
+  DashBoard,
+  DashBoardTitle,
+  Scores,
+  Score,
+  ScoreTitle,
+  ScoreValue
+} from './Home.styles';
+import {getStats, getPO} from './Home.functions';
 
 // Global Functions and Components
 import { derive } from 'global/functions';
@@ -43,11 +50,14 @@ const Home = ({
   pushEntry, 
   updateEntry,
   deleteEntry, 
-  setEntrySelected 
+  setEntrySelected
 }) => {
   const [visible, setVisible] = useState(false);
   const [deletion, setDeletion] = useState(""); // deletion holds a courseCode
   const [update, setUpdate] = useState({visible: false}); // update contains an entry
+  const PO = getPO(selected>=0 ?
+    "entries" in data[selected] ? _.cloneDeep(data[selected].entries) : [] : []
+  );
 
   return data.length !== 0 && selected !== -1 ? (
     <HomeContainer>
@@ -55,6 +65,24 @@ const Home = ({
         <Title>{data[selected].batch}</Title>
         <AddButton onClick={() => setVisible(true)}>Add new entry</AddButton>
       </TitleContainer>
+      {(PO.length===0 ? null : <DashBoard>
+        <DashBoardTitle>Program Outcome Count Attainment</DashBoardTitle>
+        <Scores>
+          {PO.map(({PO, count}, i) => <Score key={PO + i}>
+            <ScoreTitle>{PO.replace(/program outcome /i, "PO")}</ScoreTitle>
+            <ScoreValue>{Math.round(count.percentage * 100) / 100}</ScoreValue>
+          </Score>)}
+        </Scores>
+      </DashBoard>)}
+      {(PO.length===0 ? null : <DashBoard>
+        <DashBoardTitle>Program Outcome Average Attainment</DashBoardTitle>
+        <Scores>
+          {PO.map(({PO, average}, i) => <Score key={PO + i}>
+            <ScoreTitle>{PO.replace(/program outcome /i, "PO")}</ScoreTitle>
+            <ScoreValue>{Math.round(average.percentage * 100) / 100}</ScoreValue>
+          </Score>)}
+        </Scores>
+      </DashBoard>)}
       <List>
         {selected >= 0
           ? data[selected].entries.map(({ courseName, courseCode, facultyName }, i) => (
@@ -88,15 +116,19 @@ const Home = ({
           prevCourseCode={update.visible ? update.courseCode : ""}
           prevCourseName={update.visible ? update.courseName : ""}
           prevFacultyName={update.visible ? update.facultyName : ""}
-          confirm={async ({ courseName, courseCode, facultyName, file }) => {
-            if (courseName !== '' && courseCode !== '' && facultyName !== '' && !_.isEqual(file, {})
-            && visible) {
-              let fileData = await readXlsxFile(file);
+          confirm={async ({ courseName, courseCode, facultyName, files }) => {
+            if (courseName !== '' && courseCode !== '' && facultyName !== '' 
+            && !_.isEqual(files[0], {}) && !_.isEqual(files[1], {}) && visible) {
+              let fileData = await readXlsxFile(files[0]);
+              let mappingData = await readXlsxFile(files[1]);
+              let res = getStats(fileData);
+
               pushEntry(_.cloneDeep({
                 courseName,
                 courseCode,
                 facultyName,
-                fileData
+                ...res,
+                mappingData
               }));
               setVisible(false);
             }
@@ -111,9 +143,15 @@ const Home = ({
               if (facultyName!=="") {
                 newEntry.facultyName = facultyName;
               }
-              if (!_.isEqual(file, {})) {
-                let fileData = await readXlsxFile(file);
-                newEntry.fileData = fileData;
+              if (!_.isEqual(files[0], {})) {
+                let fileData = await readXlsxFile(files[0]);
+                let {contOutputs, avgOutputs} = getStats(_.cloneDeep(fileData));
+                newEntry.contOutputs = contOutputs;
+                newEntry.avgOutputs = avgOutputs;
+              }
+              if (!_.isEqual(files[1], {})) {
+                let mappingData = await readXlsxFile(files[1]);
+                newEntry.mappingData = mappingData;
               }
               updateEntry(update.courseCode, newEntry);
               setUpdate({visible: false})

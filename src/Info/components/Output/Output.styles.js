@@ -13,14 +13,7 @@ export const OutputContainer = styled.div`
   margin-bottom: 1.2rem;
 `;
 
-export const OutputPO = styled.p`
-  flex: 1;
-  font-size: 1.6rem;
-  color: gray;
-  padding: 0 8px;
-`;
-
-export const OutputCO = styled.p`
+export const OutputTitle = styled.p`
   flex: 1;
   font-size: 1.6rem;
   color: gray;
