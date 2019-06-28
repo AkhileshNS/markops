@@ -5,14 +5,15 @@ import _ from 'lodash';
 import readXlsxFile from 'read-excel-file';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
-// Local Styles
+// Local Styles and Functions
 import {
   HomeContainer,
   TitleContainer,
   Title,
   AddButton,
   List
-} from 'Home/Home.styles';
+} from './Home.styles';
+import {getStats, getPO} from './Home.functions';
 
 // Global Functions and Components
 import { derive } from 'global/functions';
@@ -43,7 +44,7 @@ const Home = ({
   pushEntry, 
   updateEntry,
   deleteEntry, 
-  setEntrySelected 
+  setEntrySelected
 }) => {
   const [visible, setVisible] = useState(false);
   const [deletion, setDeletion] = useState(""); // deletion holds a courseCode
@@ -93,11 +94,13 @@ const Home = ({
             && !_.isEqual(files[0], {}) && !_.isEqual(files[1], {}) && visible) {
               let fileData = await readXlsxFile(files[0]);
               let mappingData = await readXlsxFile(files[1]);
+              let res = getStats(fileData);
+
               pushEntry(_.cloneDeep({
                 courseName,
                 courseCode,
                 facultyName,
-                fileData,
+                ...res,
                 mappingData
               }));
               setVisible(false);
@@ -115,7 +118,9 @@ const Home = ({
               }
               if (!_.isEqual(files[0], {})) {
                 let fileData = await readXlsxFile(files[0]);
-                newEntry.fileData = fileData;
+                let {contOutputs, avgOutputs} = getStats(_.cloneDeep(fileData));
+                newEntry.contOutputs = contOutputs;
+                newEntry.avgOutputs = avgOutputs;
               }
               if (!_.isEqual(files[1], {})) {
                 let mappingData = await readXlsxFile(files[1]);

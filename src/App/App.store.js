@@ -11,7 +11,7 @@ class AppStore {
   currRoute = '/all';
   data = [{
     batch: "2016 Batch",
-    entries: [_.cloneDeep(dummyEntry)],
+    entries: [],
     selected: -1
   }];
   selected = 0;
@@ -90,8 +90,11 @@ class AppStore {
       if ("facultyName" in newEntry) {
         this.data[this.selected].entries[index].facultyName = newEntry.facultyName; 
       }
-      if ("fileData" in newEntry) {
-        this.data[this.selected].entries[index].fileData = newEntry.fileData; 
+      if ("contOutputs" in newEntry) {
+        this.data[this.selected].entries[index].contOutputs = newEntry.contOutputs; 
+      }
+      if ("avgOutputs" in newEntry) {
+        this.data[this.selected].entries[index].avgOutputs = newEntry.avgOutputs; 
       }
       if ("mappingData" in newEntry) {
         this.data[this.selected].entries[index].mappingData = newEntry.mappingData; 

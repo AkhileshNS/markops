@@ -25,8 +25,15 @@ export const Title = styled.h1`
 export const StatsContainer = styled.div`
   background-color: white;
   border-radius: 4px;
-  padding: 3.6rem;
+  padding: 2.4rem 3.6rem 3.6rem;
   margin-bottom: 2.4rem;
   display: flex;
   flex-direction: column;
 `;
+
+export const StatsTitle = styled.div`
+  width: 100%;
+  color: ${colors.primary};
+  padding-bottom: 2.4rem;
+  font-size: 2rem;
+`
