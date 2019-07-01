@@ -12,7 +12,8 @@ import {
   DialogOptions,
   DialogButton,
   DialogInput,
-  FormMessage
+  FormMessage,
+  Error
 } from './Modal.styles';
 
 // Global Component
@@ -73,7 +74,8 @@ let Form = ({
   prevFacultyName = '',
   name,
   confirm,
-  cancel
+  cancel,
+  error = ""
 }) => {
   const [state, setState] = useState({
     courseName: prevCourseName,
@@ -168,6 +170,7 @@ let Form = ({
           Drop files here or click to upload
         </Files>
         <DialogMessage gray>{"name" in state.files[1] ? state.files[1].name: ""}</DialogMessage>
+        {error!=="" ? <Error>{error}</Error> : null}
         <DialogOptions>
           <DialogButton onClick={() => confirm(_.cloneDeep(state))}>
             Confirm

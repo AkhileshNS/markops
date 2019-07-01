@@ -46,6 +46,15 @@ export const DialogMessage = styled.p`
   ` : ""}
 `;
 
+export const Error = styled.p`
+  font-size: 1.6rem;
+  color: white;
+  background-color: ${colors.error};
+  padding: 6px;
+  margin: 6px;
+  border-radius: 4px;
+`;
+
 export const DialogOptions = styled.div`
   display: flex;
   justify-content: flex-end;

@@ -55,9 +55,69 @@ const Home = ({
   const [visible, setVisible] = useState(false);
   const [deletion, setDeletion] = useState(""); // deletion holds a courseCode
   const [update, setUpdate] = useState({visible: false}); // update contains an entry
+  const [error, setError] = useState("");
   const PO = getPO(selected>=0 ?
     "entries" in data[selected] ? _.cloneDeep(data[selected].entries) : [] : []
   );
+
+  const confirm = async ({ courseName, courseCode, facultyName, files }) => {
+    if (courseName !== '' && courseCode !== '' && facultyName !== '' 
+    && !_.isEqual(files[0], {}) && !_.isEqual(files[1], {}) && visible
+    && _.findIndex(data[selected].entries,{courseCode})===-1) {
+      let fileData = await readXlsxFile(files[0]);
+      let mappingData = await readXlsxFile(files[1]);
+      let res = getStats(fileData);
+
+      pushEntry(_.cloneDeep({
+        courseName,
+        courseCode,
+        facultyName,
+        ...res,
+        mappingData
+      }));
+      setVisible(false);
+      setError("");
+    }
+    if (visible) {
+      if (courseCode==="") {
+        setError("Coursecode cannot be empty");
+      } else if (selected>=0 && _.findIndex(data[selected].entries,{courseCode})!==-1) {
+        setError("This course code has already been taken");
+      } else if (courseName==="") {
+        setError("Coursename cannot be empty");
+      } else if (facultyName==="") {
+        setError("Facultyname cannot be empty");
+      } else if (_.isEqual(files[0], {})) {
+        setError("You must upload a marks sheet");
+      } else if (_.isEqual(files[1], {})) {
+        setError("You must upload a CO/PO mapping sheet");
+      }
+    }
+    if (update.visible) {
+      let newEntry = {};
+      if (courseCode!=="") {
+        newEntry.courseCode = courseCode;
+      }
+      if (courseName!=="") {
+        newEntry.courseName = courseName;
+      }
+      if (facultyName!=="") {
+        newEntry.facultyName = facultyName;
+      }
+      if (!_.isEqual(files[0], {})) {
+        let fileData = await readXlsxFile(files[0]);
+        let {contOutputs, avgOutputs} = getStats(_.cloneDeep(fileData));
+        newEntry.contOutputs = contOutputs;
+        newEntry.avgOutputs = avgOutputs;
+      }
+      if (!_.isEqual(files[1], {})) {
+        let mappingData = await readXlsxFile(files[1]);
+        newEntry.mappingData = mappingData;
+      }
+      updateEntry(update.courseCode, newEntry);
+      setUpdate({visible: false})
+    }
+  };
 
   return data.length !== 0 && selected !== -1 ? (
     <HomeContainer>
@@ -116,47 +176,8 @@ const Home = ({
           prevCourseCode={update.visible ? update.courseCode : ""}
           prevCourseName={update.visible ? update.courseName : ""}
           prevFacultyName={update.visible ? update.facultyName : ""}
-          confirm={async ({ courseName, courseCode, facultyName, files }) => {
-            if (courseName !== '' && courseCode !== '' && facultyName !== '' 
-            && !_.isEqual(files[0], {}) && !_.isEqual(files[1], {}) && visible) {
-              let fileData = await readXlsxFile(files[0]);
-              let mappingData = await readXlsxFile(files[1]);
-              let res = getStats(fileData);
-
-              pushEntry(_.cloneDeep({
-                courseName,
-                courseCode,
-                facultyName,
-                ...res,
-                mappingData
-              }));
-              setVisible(false);
-            }
-            if (update.visible) {
-              let newEntry = {};
-              if (courseCode!=="") {
-                newEntry.courseCode = courseCode;
-              }
-              if (courseName!=="") {
-                newEntry.courseName = courseName;
-              }
-              if (facultyName!=="") {
-                newEntry.facultyName = facultyName;
-              }
-              if (!_.isEqual(files[0], {})) {
-                let fileData = await readXlsxFile(files[0]);
-                let {contOutputs, avgOutputs} = getStats(_.cloneDeep(fileData));
-                newEntry.contOutputs = contOutputs;
-                newEntry.avgOutputs = avgOutputs;
-              }
-              if (!_.isEqual(files[1], {})) {
-                let mappingData = await readXlsxFile(files[1]);
-                newEntry.mappingData = mappingData;
-              }
-              updateEntry(update.courseCode, newEntry);
-              setUpdate({visible: false})
-            }
-          }}
+          confirm={confirm}
+          error={update.visible ? "" : error}
         />
       ) : null}
       {deletion!=="" ? <Dialog 
