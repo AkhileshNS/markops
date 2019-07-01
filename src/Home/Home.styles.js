@@ -35,6 +35,7 @@ export const Scores = styled.div`
 
 export const Score = styled.div`
   flex: 1;
+  max-width: 7rem;
   display: flex;
   flex-direction: column;
   background-color: ${colors.primary_tint};

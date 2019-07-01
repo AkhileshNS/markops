@@ -31,6 +31,13 @@ export const Input = styled(TextInput)`
   height: calc(4.8rem - 12px);
 `;
 
+export const Error = styled.p`
+  color: ${colors.error};
+  padding: 4px 0 0;
+  font-size: 1.2rem;
+  margin: 0 6px;
+`;
+
 export const AddButton = styled(Button)`
   width: calc(100% - 12px);
   height: calc(4.8rem - 12px);

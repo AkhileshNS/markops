@@ -2,6 +2,7 @@
 import React, { useState, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+import _ from 'lodash';
 
 // Global Functions and Components
 import { derive } from 'global/functions';
@@ -14,7 +15,8 @@ import {
   ListItem,
   ListItemTitle,
   AddButton,
-  Input
+  Input,
+  Error
 } from './Sidebar.styles';
 
 const SidebarMenu = () => (
@@ -30,9 +32,9 @@ const SidebarMenu = () => (
 
 const Sidebar = ({
   dates = [{
-    name: '2016 Batch'
+    batch: '2016 Batch'
   }, {
-    name: '2017 Batch'
+    batch: '2017 Batch'
   }],
   selectedDate = 0,
   setSelected = i => console.log(`Item ${i + 1} was selected`),
@@ -45,6 +47,8 @@ const Sidebar = ({
   const [deletion, setDeletion] = useState(''); // deletion and update hold the name of a batch 
   const [update, setUpdate] = useState('');
 
+  let index = _.findIndex(dates, {batch: value});
+
   return <Fragment>
     <SidebarContainer>
       <Input
@@ -52,7 +56,9 @@ const Sidebar = ({
         value={value}
         onChange={({ target }) => setValue(target.value)}
       />
+      {index!==-1 ? <Error>batch already exists</Error> : null}
       <AddButton
+        disabled={index!==-1}
         onClick={() => {
           pushBatch(value);
           setValue('');
