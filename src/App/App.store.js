@@ -4,15 +4,12 @@ import _ from 'lodash';
 
 // Global Dummy Entry and Database
 import db from 'global/database';
+import { dummyBatch } from 'global/dummy';
 
 class AppStore {
   trigger = true;
   currRoute = '/all';
-  data = [{
-    batch: "2016 Batch",
-    entries: [],
-    selected: -1
-  }];
+  data = [dummyBatch];
   selected = 0;
 
   startTrigger = () => (this.trigger = true);
