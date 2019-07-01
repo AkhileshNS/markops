@@ -12,7 +12,8 @@ import {
   DialogOptions,
   DialogButton,
   DialogInput,
-  FormMessage
+  FormMessage,
+  Error
 } from './Modal.styles';
 
 // Global Component
@@ -38,8 +39,10 @@ let Dialog = ({ message, confirm, cancel }) => <Fragment>
   </Modal>
 </Fragment>;
 
-let Renamer = ({ message, prevName = '', confirm, cancel }) => {
+let Renamer = ({ message, prevName = '', confirm, cancel, batches = [] }) => {
   const [value, setValue] = useState(prevName);
+  let index = _.findIndex(batches, {batch: value});
+  if (prevName===value) {index = -1;}
 
   return <Fragment>
     <Backdrop onClick={cancel} />
@@ -53,8 +56,11 @@ let Renamer = ({ message, prevName = '', confirm, cancel }) => {
           value={value}
           onChange={({ target }) => setValue(target.value)}
         />
+        {(index===-1 ? null : <DialogMessage red>
+          This batch already exists
+        </DialogMessage>)}
         <DialogOptions>
-          <DialogButton onClick={() => confirm(value)}>Confirm</DialogButton>
+          <DialogButton disabled={index!==-1} onClick={() => confirm(value)}>Confirm</DialogButton>
           <DialogButton onClick={cancel}>Cancel</DialogButton>
         </DialogOptions>
       </DialogContainer>
@@ -68,7 +74,8 @@ let Form = ({
   prevFacultyName = '',
   name,
   confirm,
-  cancel
+  cancel,
+  error = ""
 }) => {
   const [state, setState] = useState({
     courseName: prevCourseName,
@@ -163,6 +170,7 @@ let Form = ({
           Drop files here or click to upload
         </Files>
         <DialogMessage gray>{"name" in state.files[1] ? state.files[1].name: ""}</DialogMessage>
+        {error!=="" ? <Error>{error}</Error> : null}
         <DialogOptions>
           <DialogButton onClick={() => confirm(_.cloneDeep(state))}>
             Confirm
