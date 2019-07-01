@@ -52,6 +52,7 @@ const Sidebar = ({
   return <Fragment>
     <SidebarContainer>
       <Input
+        error={index!==-1}
         placeholder='Enter Batch (Ex: 2016 Batch)'
         value={value}
         onChange={({ target }) => setValue(target.value)}
@@ -96,6 +97,7 @@ const Sidebar = ({
       cancel={() => setDeletion("")} 
     /> : null}
     {update!=="" ? <Renamer 
+      batches={dates}
       message="Enter the new batch name:-"
       prevName={update}
       confirm={value => {

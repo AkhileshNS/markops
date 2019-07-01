@@ -1,5 +1,5 @@
 // External Modules
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 // Global Styles
 import { colors, zIndices, Button, Input } from 'global/styles';
@@ -38,8 +38,12 @@ export const DialogContainer = styled.div`
 
 export const DialogMessage = styled.p`
   font-size: 1.6rem;
-  color: ${({gray}) => gray ? "gray" : colors.primary};
+  color: ${({gray, red}) => gray ? "gray" : (red ? colors.error : colors.primary)};
   margin: 6px;
+  
+  ${({red}) => red ? css`
+    margin: 0 0 0 6px;
+  ` : ""}
 `;
 
 export const DialogOptions = styled.div`
@@ -51,6 +55,12 @@ export const DialogButton = styled(Button)`
   font-size: 1.6rem;
   padding: 6px;
   margin: 6px;
+
+  :disabled,[disabled] {
+    background-color: ${colors.primary};
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
 `;
 
 export const DialogInput = styled(Input)`

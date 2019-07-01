@@ -42,6 +42,12 @@ export const AddButton = styled(Button)`
   width: calc(100% - 12px);
   height: calc(4.8rem - 12px);
   margin: 6px;
+
+  :disabled,[disabled] {
+    background-color: ${colors.primary};
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
 `;
 
 export const ListItem = styled.li`
