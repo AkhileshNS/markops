@@ -59,7 +59,7 @@ const Sidebar = ({
       />
       {index!==-1 ? <Error>batch already exists</Error> : null}
       <AddButton
-        disabled={index!==-1}
+        disabled={index!==-1 || value===""}
         onClick={() => {
           pushBatch(value);
           setValue('');
