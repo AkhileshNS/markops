@@ -1,5 +1,5 @@
 export const dummyBatch = {
-  batch: "2016 Batch",
+  batch: "2016 Batch (Template)",
   selected: -1,
   "entries": [{
     courseName: "Client Server Programming",
