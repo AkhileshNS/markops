@@ -13,6 +13,17 @@ export const AppbarContainer = styled.div`
   display: flex;
   z-index: ${zIndices.level4};
   border-bottom: 1px solid ${colors.gray_bg};
+  align-items: center;
+
+  .Icon {
+    color: ${colors.primary};
+    margin-left: 20px;
+    cursor: pointer;
+
+    :hover {
+      color: ${colors.primary_dark};
+    }
+  }
 `;
 
 export const TitleContainer = styled.div`

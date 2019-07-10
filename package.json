@@ -12,6 +12,7 @@
     "react-contextmenu": "^2.11.0",
     "react-dom": "^16.8.6",
     "react-files": "^2.4.8",
+    "react-icons": "^3.7.0",
     "react-scripts": "3.0.1",
     "read-excel-file": "^4.0.1",
     "styled-components": "^4.3.2"
