@@ -172,7 +172,7 @@ const Home = ({
       {visible || update.visible ? (
         <Form
           name={data[selected].batch}
-          cancel={() => setVisible(false)}
+          cancel={visible ? () => setVisible(false) : () => setUpdate({visible: false})}
           prevCourseCode={update.visible ? update.courseCode : ""}
           prevCourseName={update.visible ? update.courseName : ""}
           prevFacultyName={update.visible ? update.facultyName : ""}
