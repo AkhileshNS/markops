@@ -179,30 +179,32 @@ export const getPO = entries => {
 
     for (let j=1; j<filteredData.length; j++) {
       for (let k=1; k<filteredData[j].length; k++) {
-        let index = _.findIndex(PO, {PO: filteredData[0][k]});
-        let cntAttainment = _.find(entries[i].contOutputs, {CO: filteredData[j][0]}); 
-        let avgAttainment = _.find(entries[i].avgOutputs, {CO: filteredData[j][0]});
-        if (index===-1) {
-          PO.push({
-            PO: filteredData[0][k],
-            count: {
-              total: (cntAttainment.percentage*filteredData[j][k]),
-              weights: filteredData[j][k],
-              percentage: cntAttainment.percentage/filteredData[j][k]
-            },
-            average: {
-              total: (avgAttainment.percentage*filteredData[j][k]),
-              weights: filteredData[j][k],
-              percentage: avgAttainment.percentage/filteredData[j][k]
-            }
-          });
-        } else {
-          PO[index].count.total += (cntAttainment.percentage*filteredData[j][k]);
-          PO[index].count.weights += filteredData[j][k];
-          PO[index].count.percentage = PO[index].count.total/PO[index].count.weights;
-          PO[index].average.total += (avgAttainment.percentage*filteredData[j][k]);
-          PO[index].average.weights += filteredData[j][k];
-          PO[index].average.percentage = PO[index].average.total/PO[index].average.weights;
+        if (filteredData[j][k]) {
+          let index = _.findIndex(PO, {PO: filteredData[0][k]});
+          let cntAttainment = _.find(entries[i].contOutputs, {CO: filteredData[j][0]}); 
+          let avgAttainment = _.find(entries[i].avgOutputs, {CO: filteredData[j][0]});
+          if (index===-1) {
+            PO.push({
+              PO: filteredData[0][k],
+              count: {
+                total: (cntAttainment.percentage*filteredData[j][k]),
+                weights: filteredData[j][k],
+                percentage: cntAttainment.percentage/filteredData[j][k]
+              },
+              average: {
+                total: (avgAttainment.percentage*filteredData[j][k]),
+                weights: filteredData[j][k],
+                percentage: avgAttainment.percentage/filteredData[j][k] 
+              }
+            });
+          } else {
+            PO[index].count.total += (cntAttainment.percentage*filteredData[j][k]);
+            PO[index].count.weights += filteredData[j][k];
+            PO[index].count.percentage = PO[index].count.total/PO[index].count.weights;
+            PO[index].average.total += (avgAttainment.percentage*filteredData[j][k]);
+            PO[index].average.weights += filteredData[j][k];
+            PO[index].average.percentage = PO[index].average.total/PO[index].average.weights;
+          }
         }
       }
     }
